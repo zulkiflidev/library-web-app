@@ -3,6 +3,8 @@ import LoginPage from '@/features/auth/LoginPage';
 import RegisterPage from '@/features/auth/RegisterPage';
 import HomePage from '@/features/books/HomePage'
 import Layout from "@/components/common/layout";
+import BookDetailPage from "@/features/books/BookDetailPage";
+
 
 
 export const router = createBrowserRouter(
@@ -25,6 +27,10 @@ export const router = createBrowserRouter(
                 {
                     path: '/register',
                     element: <RegisterPage />  
+                },
+                {
+                    path: '/books/:id',
+                    element: <BookDetailPage />
                 }                
             ]
         },
