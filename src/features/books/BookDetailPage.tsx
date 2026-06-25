@@ -99,6 +99,13 @@ function BookDetailPage() {
                         <p className="text-sm text-muted-foreground">{review.createdAt}</p>
                                                        
                     </div>
+
+                    {
+                        review.user && (
+                            <p className="text-sm font-bold">{review.user.name}</p>
+                        )
+                    }
+
                     {review.comment && (
                         <p className="text-sm">{review.comment}</p>
                     )}

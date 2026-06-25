@@ -5,11 +5,18 @@ import useLoans from '@/hooks/useLoans';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 
+import ReviewModal from '@/components/common/ReviewModal';
+
+
+
+
 
 function BorrowedListPage() {
 
   const [status, setStatus] = useState('all');
   const { data, isLoading, isError } = useLoans( status );
+
+  const [selectedBookId, setSelectedBookId] = useState<number | null>(null)
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error: Failed to load loans list...</div>
@@ -75,7 +82,9 @@ function BorrowedListPage() {
                         </div>
 
                         { loan.status === 'BORROWED' && (
-                            <Button size="sm" variant="outline">
+                            <Button size="sm" variant="outline"
+                                    onClick={ () => setSelectedBookId(loan.book.id) }
+                            >
                                 Give Review
                             </Button>
                         )}
@@ -89,7 +98,13 @@ function BorrowedListPage() {
             }
         </div>
 
-    </div>
+        <ReviewModal open={selectedBookId !== null}
+                 onClose={ () => setSelectedBookId(null) }
+                 bookId={selectedBookId ?? 0}
+    
+        />
+
+    </div>    
 
   )
 }
