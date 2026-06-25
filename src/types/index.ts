@@ -117,7 +117,7 @@ export interface AdminUsersResponse {
 }
 
 export interface AdminBooksResponse {
-    users: Book[];
+    books: Book[];
     pagination: LoanPagination;
 }
 
