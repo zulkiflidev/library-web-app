@@ -80,3 +80,24 @@ export interface LoanResponse {
     pagination: LoanPagination;
 
 }
+
+
+export interface MyReview {
+    id: number;
+    star: number;
+    comment: string;
+    createdAt: string;
+    book: Book;
+}
+
+export interface MyReviewResponse {
+    reviews: MyReview[];
+    pagination: LoanPagination;
+}
+
+
+
+
+
+
+
