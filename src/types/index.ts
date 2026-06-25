@@ -55,3 +55,28 @@ export interface Book{
 
 
 }
+
+
+export interface Loan {
+    id: number;
+    status: 'BORROWED' | 'RETURNED' | 'OVERDUE';
+    displayStatus: string;
+    borrowedAt: string;
+    dueAt: string;
+    returnedAt: string | null;
+    durationDays: number;
+    book: Book;
+}
+
+export interface LoanPagination {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+}
+
+export interface LoanResponse {
+    loans: Loan[];
+    pagination: LoanPagination;
+
+}

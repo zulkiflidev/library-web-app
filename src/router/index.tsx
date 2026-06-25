@@ -5,7 +5,7 @@ import HomePage from '@/features/books/HomePage'
 import Layout from "@/components/common/layout";
 import BookDetailPage from "@/features/books/BookDetailPage";
 
-
+import BorrowedListPage from "@/features/loans/BorrowedListPage";
 
 export const router = createBrowserRouter(
     [
@@ -31,7 +31,11 @@ export const router = createBrowserRouter(
                 {
                     path: '/books/:id',
                     element: <BookDetailPage />
-                }                
+                },
+                {
+                    path: '/loans',
+                    element: <BorrowedListPage />
+                }      
             ]
         },
     ]

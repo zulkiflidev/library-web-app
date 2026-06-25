@@ -8,6 +8,8 @@ import './index.css'
 import App from './App.tsx'
 import { store } from './store'
 
+import { Toaster } from 'react-hot-toast';
+
 const queryClient = new QueryClient()
 
 createRoot(document.getElementById('root')!).render(
@@ -15,6 +17,7 @@ createRoot(document.getElementById('root')!).render(
     <Provider store={store}>
       
       <QueryClientProvider client={queryClient}>
+        <Toaster position="top-center" />
         <App />
       </QueryClientProvider>
     
