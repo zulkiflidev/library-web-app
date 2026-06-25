@@ -1,15 +1,18 @@
 //import React from 'react'
 
 import { useState } from 'react';
-import useLoans from '@/hooks/useLoans';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 
 import ReviewModal from '@/components/common/ReviewModal';
 
+import useLoans from '@/hooks/useLoans';
+import useReturnBook from '@/hooks/useReturnBook';
+import useMyReviews from '@/hooks/useMyReviews';
+import useReviewBook from '@/hooks/useReviewBook';
+// import useDeleteReview from '@/hooks/useDeleteReview';
 
-
-
+import type { MyReview } from '@/types';
 
 function BorrowedListPage() {
 
@@ -17,6 +20,24 @@ function BorrowedListPage() {
   const { data, isLoading, isError } = useLoans( status );
 
   const [selectedBookId, setSelectedBookId] = useState<number | null>(null)
+
+  const { mutate: returnBook, isPending: isReturning } = useReturnBook();
+
+  
+  //==Untuk daftar review yg sudah diberikan...  
+  const { data: myReviews } = useMyReviews();
+  const getMyReview = (bookId: number): MyReview | undefined =>  {
+     return myReviews?.reviews.find( (r) => r.book.id === bookId);
+  }
+
+  //==Untuk hapus review
+  const { deleteReviewMutation } = useReviewBook(0);
+  const deleteReview = (reviewId: number) => { 
+    deleteReviewMutation.mutate(reviewId);
+
+  }
+
+
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error: Failed to load loans list...</div>
@@ -81,13 +102,77 @@ function BorrowedListPage() {
 
                         </div>
 
-                        { loan.status === 'BORROWED' && (
+                        {/* { loan.status === 'BORROWED' && (
                             <Button size="sm" variant="outline"
                                     onClick={ () => setSelectedBookId(loan.book.id) }
                             >
                                 Give Review
                             </Button>
-                        )}
+                        )} */}
+
+                        { (loan.status === 'BORROWED' || loan.status === 'OVERDUE') && 
+                          (
+                            <div className="flex flex-col gap-2">
+
+                                <Button size="sm" variant="destructive"
+                                disabled={isReturning}
+                                onClick={ () => returnBook(loan.id)}
+                                >
+                                    {isReturning ? 'Returning...' : 'Return Book'}
+                                </Button>
+                            </div>
+                          )                        
+                        }
+
+                        {/* tombol give review hanya muncul untuk orang-orang yg sudah mengembalikan buku */}
+                        {
+                            loan.status === 'RETURNED' && (
+
+                                <div className="flex flex-col gap-2">
+
+                                    { 
+                                        getMyReview(loan.book.id) ? 
+                                        (
+                                            <div>
+                                                <p className="text-xs text-muted-foreground">
+                                                    ★ { getMyReview(loan.book.id)?.star } - { getMyReview(loan.book.id)?.comment }   
+                                                </p>
+
+                                                <Button size="sm" variant="outline" 
+                                                onClick={
+                                                    () => setSelectedBookId(loan.book.id)
+                                                }>
+                                                    
+                                                    Edit Review
+
+                                                </Button>
+                                                
+                                                <Button size="sm" variant="destructive" onClick={
+                                                    () => {
+                                                        const review = getMyReview(loan.book.id);
+                                                        if (review) deleteReview(review.id);
+                                                    }
+                                                }>
+                                                    Delete Review
+                                                    
+                                                </Button>      
+
+                                            </div>
+                                        ) 
+                                        : 
+                                        (
+                                            <Button size="sm" variant="outline"
+                                                    onClick={ () => setSelectedBookId(loan.book.id) }
+                                            >
+                                                Give Review
+                                            </Button>
+                                        )
+                                    }
+
+                                </div>
+
+                            )
+                        }
 
 
 

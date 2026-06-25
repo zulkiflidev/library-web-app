@@ -1,10 +1,26 @@
 # Library Web App
 
-a library web app 
+a library web application
 
-live vercel url: https://library-web-app-zulkiflidev.vercel.app
+live vercel url can be accessed here ---> https://library-web-app-zulkiflidev.vercel.app
 
+# Tech Stack
 
+• React + TypeScript: framework + type safety
+
+• Tailwind CSS: styling cepat
+
+• shadcn/ui: komponen siap pakai
+
+• Redux Toolkit: simpan token, filter, cart, UI state
+
+• TanStack Query: fetching + caching data
+
+• Optimistic UI: UX cepat (stok langsung berkurang saat pinjam)
+
+• (Opsional) Framer Motion: animasi transisi
+
+<div style="display: none;">
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
@@ -78,3 +94,5 @@ export default defineConfig([
   },
 ])
 ```
+
+</div>
