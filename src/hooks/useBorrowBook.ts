@@ -2,6 +2,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '../lib/axios';
 import type { Book } from '../types';
 
+import toast from 'react-hot-toast';
+import { AxiosError } from 'axios';
+
 
 const useBorrowBook = (bookId: number) => {
 
@@ -28,9 +31,13 @@ const useBorrowBook = (bookId: number) => {
 
                 return { previous };
             },
+            onSuccess: () => {
+                toast.success('Book borrowed successfully');
 
-            onError: (_err, _vars, context) => {
+            },
+            onError: (err: AxiosError<{ message: string }>, _vars, context) => {
                 queryClient.setQueryData(['book', bookId], context?.previous);
+                toast.error(  err ?.response?.data?.message ?? 'Failed to borrow the book!');
             },
 
             onSettled: () => {
@@ -43,7 +50,7 @@ const useBorrowBook = (bookId: number) => {
             }
 
         }
-    )
+    )   
 
 }
 

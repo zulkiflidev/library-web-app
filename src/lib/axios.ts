@@ -4,7 +4,11 @@ import { store } from '@/store/';
 
 const api = axios.create(
     {
-        baseURL: 'https://library-backend-production-b9cf.up.railway.app/api', 
+        baseURL: import.meta.env.VITE_API_BASE_URL,
+        timeout: 10000,
+        headers: {
+            'Content-Type': 'application/json',
+        }
     }
 );
 
