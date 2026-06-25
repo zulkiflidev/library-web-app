@@ -1,38 +1,3 @@
-export interface Author {
-    id: number;
-    name: string;
-    bio: string;
-    createdAt: string;
-    updatedAt: string;
-
-}
-
-
-export interface Category {
-    id: number;
-    name: string;
-    createdAt: string;
-    updatedAt: string;
-}
-
-export interface ReviewUser {
-    id: number;
-    name: string;
-}
-
-export interface Review {
-    id: number;
-    star: number;
-    // rating: number;
-    comment: string;
-    userId: number;
-    bookId: number;
-    createdAt: string;
-    updatedAt: string;
-    user: ReviewUser;
-}
-
-
 export interface Book{
     id: number;
     title: string;
@@ -56,6 +21,25 @@ export interface Book{
 
 }
 
+export interface Author {
+    id: number;
+    name: string;
+    bio: string;
+    createdAt: string;
+    updatedAt: string;
+
+}
+
+export interface Category {
+    id: number;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+
+
+//===Pinjam Buku
 
 export interface Loan {
     id: number;
@@ -82,6 +66,8 @@ export interface LoanResponse {
 }
 
 
+//===Review
+
 export interface MyReview {
     id: number;
     star: number;
@@ -95,7 +81,71 @@ export interface MyReviewResponse {
     pagination: LoanPagination;
 }
 
+export interface ReviewUser {
+    id: number;
+    name: string;
+}
 
+export interface Review {
+    id: number;
+    star: number;
+    // rating: number;
+    comment: string;
+    userId: number;
+    bookId: number;
+    createdAt: string;
+    updatedAt: string;
+    user: ReviewUser;
+}
+
+
+//===Admin
+
+export interface AdminUser {
+    id: number;
+    name: string;
+    email: string;
+    phone: string;
+    profilePhoto: string | null;
+    role: 'USER' | 'ADMIN';
+    createdAt: string;
+}
+
+export interface AdminUsersResponse {
+    users: AdminUser[];
+    pagination: LoanPagination;
+}
+
+export interface AdminBooksResponse {
+    books: Book[];
+    pagination: LoanPagination;
+}
+
+export interface Borrower {
+    id: number;
+    name: string;
+    email: string;
+    phone: string;
+}
+
+export interface AdminLoan {
+    id: number;
+    status: 'BORROWED' | 'RETURNED' | 'OVERDUE';
+    displayStatus: string;
+    borrowedAt: string;
+    dueAt: string;
+    returnedAt: string | null;
+    durationDays: number;
+    borrower: Borrower;
+    book: Pick<Book, 'id' | 'title' | 'coverImage' | 'author' | 'category'>;
+
+}
+
+export interface AdminLoansResponse {
+    loans: AdminLoan[];
+    pagination: LoanPagination;
+
+}
 
 
 
