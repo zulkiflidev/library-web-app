@@ -37,6 +37,23 @@ export interface Category {
     updatedAt: string;
 }
 
+//===Untuk Filter by Category
+
+export interface Category {
+
+    id: number;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface CategoryResponse {
+
+    categories: Category[];
+
+}
+
+
 
 
 //===Pinjam Buku

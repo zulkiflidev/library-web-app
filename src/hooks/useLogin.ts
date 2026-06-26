@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { setCredentials } from '@/features/auth/authSlice';
+import { setCredentials } from '@/features/auth/AuthSlice';
 import type { AppDispatch } from '@/store'
 
 import api from '@/lib/axios';
@@ -25,6 +25,7 @@ const useLogin = () => {
                 return response.data;
             },
             onSuccess: (data) => {
+                 console.log('response data:', data)
                 dispatch( setCredentials({
                     token: data.data.token,
                     user: data.data.user,
