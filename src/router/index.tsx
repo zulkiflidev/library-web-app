@@ -10,7 +10,9 @@ import BorrowedListPage from "@/features/loans/BorrowedListPage";
 import UserListPage from '@/features/admin/UserListPage';
 import BookListAdminPage from '@/features/admin/BookListAdminPage';
 import BorrowsListPage from '@/features/admin/BorrowsListPage';
+import ProtectedRoute from "@/components/common/ProtectedRoute";
 
+import CategoryPage from "@/features/books/CategoryPage";
 
 export const router = createBrowserRouter(
     [
@@ -38,24 +40,38 @@ export const router = createBrowserRouter(
                     element: <BookDetailPage />
                 },
                 {
-                    path: '/loans',
-                    element: <BorrowedListPage />
+                    path: '/category',
+                    element: <CategoryPage />
                 },
-                
-                {
-                    path: '/admin/users',
-                    element: <UserListPage />                
-                },
-                {
-                    path: '/admin/books',
-                    element: <BookListAdminPage />                
-                },
-                {
-                    path: '/admin/loans',
-                    element: <BorrowsListPage />                
-                },
-                
 
+                {
+                    element: <ProtectedRoute allowedRoles={['USER', 'ADMIN']} />,
+                    children: [
+
+                        {
+                            path: '/loans',
+                            element: <BorrowedListPage />
+                        },
+                    ]
+                },
+
+                {
+                    element: <ProtectedRoute allowedRoles={['ADMIN']} />,
+                    children: [
+                        {
+                            path: '/admin/users',
+                            element: <UserListPage />                
+                        },
+                        {
+                            path: '/admin/books',
+                            element: <BookListAdminPage />                
+                        },
+                        {
+                            path: '/admin/loans',
+                            element: <BorrowsListPage />                
+                        },
+                    ]
+                }
 
             ]
         },

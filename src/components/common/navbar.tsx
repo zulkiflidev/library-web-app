@@ -1,12 +1,17 @@
 //import React from 'react'
 
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from 'react-router-dom'
 
-import type { RootState } from "@/store"
-import { Button } from '@/components/ui/button'
+import type { RootState, AppDispatch } from "@/store"
+//import { Button } from '@/components/ui/button'
+import { setSearch } from '@/features/books/uiSlice';
 
 import logo from '@/assets/logo.svg';
+
+//import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+
 
 
 function Navbar() {
@@ -14,6 +19,9 @@ function Navbar() {
   const navigate = useNavigate();
   const token = useSelector((state: RootState) => state.auth.token);
 
+
+  const dispatch = useDispatch<AppDispatch>();
+  const search = useSelector( (state: RootState) => state.ui.search   );
 
   return (
     <nav className="border-b px-6 py-3 flex items-center justify-between">
@@ -25,11 +33,15 @@ function Navbar() {
 
       </div>
 
-
+      {/* Untuk pencarian Buku */}
       { token && (
 
         <input type="text" placeholder="Search"
-         className="border rounded-md px-3 py-1.5 text-sm w-72 bg-background" />
+         className="border rounded-md px-3 py-1.5 text-sm w-72 bg-background" 
+         value={search}
+         onChange={ (e) => dispatch( setSearch(e.target.value)  )  }
+         
+         />
 
       
       )}
