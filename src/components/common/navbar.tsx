@@ -11,16 +11,23 @@ import logo from '@/assets/logo.svg';
 
 //import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { logout } from '@/features/auth/authSlice';
 
+import {
+  DropdownMenu, 
+  DropdownMenuContent, DropdownMenuItem,
+  DropdownMenuTrigger, DropdownMenuSeparator,
+} from '@/components/ui/dropdown-menu';
 
 
 function Navbar() {
 
   const navigate = useNavigate();
-  const token = useSelector((state: RootState) => state.auth.token);
-
-
   const dispatch = useDispatch<AppDispatch>();
+  
+  const token = useSelector((state: RootState) => state.auth.token);
+  const user = useSelector((state: RootState) => state.auth.user);
+  
   const search = useSelector( (state: RootState) => state.ui.search   );
 
   return (
@@ -48,9 +55,59 @@ function Navbar() {
 
 
       { token ? (
-        <div className="flex items-center gap-3">
-          <span className="text-sm"> Nama User</span>
-        </div>
+                
+        // <div className="flex items-center gap-3">
+        //   <span className="text-sm"> Nama User</span>
+        // </div>
+        <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+                <Button variant="outline">
+                    👤 {user?.name}
+                </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={ () => navigate('/profile')}>
+                Profile
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={ () => navigate('/loans')}>
+                My Loans
+              </DropdownMenuItem>
+
+              {
+                user?.role === 'ADMIN' && (
+                  <div>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={ () => navigate('/admin/users')}>
+                        Admin - Users
+                      </DropdownMenuItem>
+
+                      <DropdownMenuItem onClick={ () => navigate('/admin/books')}>
+                        Admin - Books
+                      </DropdownMenuItem>
+
+                      <DropdownMenuItem onClick={ () => navigate('/admin/loans')}>
+                        Admin - Loans
+                      </DropdownMenuItem>
+
+                  </div>
+                )
+              }
+              
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className="text-destructive"
+                                onClick={ 
+                                  () => {
+                                    dispatch( logout() );
+                                    navigate('/login');
+                                  }
+                                }>
+
+              </DropdownMenuItem>
+
+            </DropdownMenuContent>
+
+        </DropdownMenu>
+
       ):(
 
         <div className="flex items0center gap-2">
