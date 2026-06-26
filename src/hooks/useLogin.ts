@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { setCredentials } from '@/features/auth/AuthSlice';
+import { setCredentials } from '@/features/auth/authSlice';
 import type { AppDispatch } from '@/store'
 
 import api from '@/lib/axios';
