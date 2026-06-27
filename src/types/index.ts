@@ -202,8 +202,10 @@ export interface AuthorItem {
     id: number;
     name: string;
     bio: string;
-    createdAt: string;
-    updatedAt: string;
+    createdAt?: string;
+    updatedAt?: string;
+    bookCount?: number;
+    accumulatedScore?: number;
 }
 
 export interface AuthorResponse {
