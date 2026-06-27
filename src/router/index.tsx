@@ -13,6 +13,8 @@ import BorrowsListPage from '@/features/admin/BorrowsListPage';
 import ProtectedRoute from "@/components/common/ProtectedRoute";
 
 import CategoryPage from "@/features/books/CategoryPage";
+import ProfilePage from "@/features/profile/ProfilePage";
+
 
 export const router = createBrowserRouter(
     [
@@ -52,6 +54,10 @@ export const router = createBrowserRouter(
                             path: '/loans',
                             element: <BorrowedListPage />
                         },
+                        {
+                            path: '/profile',
+                            element: <ProfilePage />
+                        }
                     ]
                 },
 
