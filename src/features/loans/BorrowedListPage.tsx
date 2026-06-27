@@ -20,7 +20,6 @@ function BorrowedListPage() {
   const { data, isLoading, isError } = useLoans( status );
 
   const [selectedBookId, setSelectedBookId] = useState<number | null>(null)
-
   const { mutate: returnBook, isPending: isReturning } = useReturnBook();
 
   
@@ -43,7 +42,7 @@ function BorrowedListPage() {
   if (isError) return <div>Error: Failed to load loans list...</div>
 
   return (
-    <div  className="space-y-6">
+    <div  className="space-y-6 px-4 md:px-20">
     
         <h1 className="text-2xl font-bold">My Loans</h1>
         <div className="flex gap-2">

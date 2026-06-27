@@ -117,7 +117,7 @@ function BookFormModal(
 
 
   return (
-    <div>
+    <div className="px-4 md:px-20">
         <Dialog open={open} onOpenChange={onClose}>
             <DialogContent className="max-w-lg max-h-[80vh] overflow-y-auto">
 

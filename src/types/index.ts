@@ -1,3 +1,5 @@
+//all types...
+
 export interface Book{
     id: number;
     title: string;
@@ -213,4 +215,12 @@ export interface AuthorResponse {
 }
 
 
+//===Untuk Book by Author
 
+export interface AuthorBooksResponse {
+
+    author: Author;
+    bookCount: number; 
+    books: Book[];
+    pagination: LoanPagination;
+}

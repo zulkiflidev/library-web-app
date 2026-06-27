@@ -103,8 +103,6 @@ function AddEditBookPage() {
 
   }
 
-
-
   const handleAddCategory = () => {
     addCategory(
       { name: newCategoryName },
@@ -122,33 +120,6 @@ function AddEditBookPage() {
   }
 
 
-
-  // const handleSubmit = () => {
-  //   const formData = new FormData()    
-  //   formData.append('title', title)    
-  //   formData.append('isbn', isbn)
-  //   formData.append('description', description)
-  //   formData.append('publishedYear', publishedYear)
-  //   formData.append('totalCopies', totalCopies)    
-  //   formData.append('availableCopies', availableCopies)
-  //   formData.append('categoryId', categoryId)
-  //   formData.append('authorId', authorId)
-  //   formData.append('authorName', authorName)
-  //   if (coverImage) formData.append('coverImage', coverImage)
-  //   if (isEdit && id) {
-  //     editBook(
-  //       { id: Number(id), payload: formData as any },
-  //       { onSuccess: () => navigate('/admin/books') }
-  //     )
-  //   } 
-  //   else {      
-  //     addBook(
-  //       formData as any,
-  //       { onSuccess: () => navigate('/admin/books') }
-  //     )
-  //   }
-  // }
-
   const handleSubmit = () => {
 
     const payload = {
@@ -157,6 +128,7 @@ function AddEditBookPage() {
       publishedYear: Number(publishedYear),
       totalCopies: Number(totalCopies),
       availableCopies: Number(availableCopies),
+
       categoryId: Number(categoryId),
       authorId: Number(authorId),
       authorName,
@@ -204,9 +176,6 @@ function AddEditBookPage() {
       reader.readAsDataURL(file);
   
   } 
-
-
-
 
 
 
@@ -312,7 +281,7 @@ function AddEditBookPage() {
               () => setShowAddCategory(!showAddCategory)
             }
           >
-            + Tambah Kategori Baru
+            + Add New Category
 
           </Button>
           
@@ -337,7 +306,7 @@ function AddEditBookPage() {
                   onClick={handleAddCategory}
                 
                 >
-                  Simpan
+                  Save
                 </Button>
               </div>
 
@@ -355,12 +324,14 @@ function AddEditBookPage() {
             
             onChange={
               (e) => {
+                
                 setAuthorId(e.target.value)
                 const author = authorsData?.authors.find(
 
                   (a) => String(a.id) === e.target.value
                 
                 )
+
                 if (author) setAuthorName(author.name)
               
               }
