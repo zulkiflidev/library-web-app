@@ -1,0 +1,371 @@
+import { useState, useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import useCategories from '@/hooks/useCategories'
+import useAuthors from '@/hooks/admin/useAuthors'
+import useAddAuthor from '@/hooks/admin/useAddAuthor'
+import useAddCategory from '@/hooks/admin/useAddCategory'
+import { useAddBook, useEditBook } from '@/hooks/admin/useAdminBooksMutation'
+import useBookDetail from '@/hooks/useBookDetail'
+
+function AddEditBookPage() {
+  const navigate = useNavigate()
+  const { id } = useParams<{ id: string }>()
+  const isEdit = !!id
+
+  const { data: bookData } = useBookDetail(id ?? '')
+  const { data: categoriesData } = useCategories()
+  
+  const { data: authorsData } = useAuthors()
+  const { mutate: addBook, isPending: isAdding } = useAddBook()
+
+
+  const { mutate: editBook, isPending: isEditing } = useEditBook()
+  const { mutate: addAuthor, isPending: isAddingAuthor } = useAddAuthor()
+  const { mutate: addCategory, isPending: isAddingCategory } = useAddCategory()
+
+  const [title, setTitle] = useState('')
+  const [isbn, setIsbn] = useState('')
+  const [description, setDescription] = useState('')
+  const [publishedYear, setPublishedYear] = useState('')
+  const [totalCopies, setTotalCopies] = useState('')
+
+  const [availableCopies, setAvailableCopies] = useState('')
+  const [categoryId, setCategoryId] = useState('')
+  const [authorId, setAuthorId] = useState('')
+  const [authorName, setAuthorName] = useState('')
+  const [coverImage, setCoverImage] = useState<File | null>(null)
+
+  // form tambah author baru
+  const [showAddAuthor, setShowAddAuthor] = useState(false)
+  const [newAuthorName, setNewAuthorName] = useState('')
+  const [newAuthorBio, setNewAuthorBio] = useState('')
+
+  // form tambah category baru
+  const [showAddCategory, setShowAddCategory] = useState(false)
+  const [newCategoryName, setNewCategoryName] = useState('')
+
+  // isi form kalau mode edit
+  useEffect(() => {
+
+    if (bookData && isEdit) {
+      
+      setTitle(bookData.title)
+      setIsbn(bookData.isbn)
+      setDescription( bookData.description )
+      
+      setPublishedYear(  String(bookData.publishedYear) )
+      setTotalCopies(  String(bookData.totalCopies)  )
+      setAvailableCopies(String(bookData.availableCopies) )
+      
+      setCategoryId( String(bookData.category?.id ?? '') )
+      setAuthorId(  String(bookData.authorId) )
+      setAuthorName(bookData.author.name)
+
+    }
+  }, [bookData, isEdit])
+
+  const handleAddAuthor = () => {
+    addAuthor(
+      { name: newAuthorName, bio: newAuthorBio },
+      {
+        onSuccess: (data) => {
+
+          setAuthorId(String(data.data.id))
+          setAuthorName(data.data.name)
+          setShowAddAuthor(false)
+          setNewAuthorName('')
+          setNewAuthorBio('')
+        
+        }
+
+
+      }
+    )
+  }
+
+  const handleAddCategory = () => {
+    addCategory(
+      { name: newCategoryName },
+      {
+        onSuccess: (data) => {
+
+          setCategoryId(String(data.data.id))
+          setShowAddCategory(false)
+          setNewCategoryName('')
+        
+        }
+      }
+    )
+  }
+
+  const handleSubmit = () => {
+    const formData = new FormData()
+    
+    formData.append('title', title)
+    
+    formData.append('isbn', isbn)
+    formData.append('description', description)
+    formData.append('publishedYear', publishedYear)
+    formData.append('totalCopies', totalCopies)
+    
+    formData.append('availableCopies', availableCopies)
+    formData.append('categoryId', categoryId)
+    formData.append('authorId', authorId)
+    formData.append('authorName', authorName)
+
+    if (coverImage) formData.append('coverImage', coverImage)
+
+    if (isEdit && id) {
+      editBook(
+        { id: Number(id), payload: formData as any },
+        { onSuccess: () => navigate('/admin/books') }
+      )
+    } else {
+      addBook(
+        formData as any,
+        { onSuccess: () => navigate('/admin/books') }
+      )
+    }
+  }
+
+  const isPending = isAdding || isEditing
+
+  return (
+    <div className="max-w-2xl mx-auto space-y-6">
+      <h1 className="text-2xl font-bold">{isEdit ? 'Edit Buku' : 'Tambah Buku'}</h1>
+
+      <div className="space-y-4">
+        <Input placeholder="Judul" value={title}
+             onChange={
+        
+              (e) => setTitle(e.target.value)
+        
+            } 
+        />
+        
+        <Input placeholder="ISBN" value={isbn} 
+        
+        onChange={          
+            (e) => setIsbn(e.target.value)
+          } 
+        />
+        
+        <Input placeholder="Deskripsi" value={description} 
+        onChange={
+            (e) => setDescription(e.target.value)
+        } />
+        
+        <Input placeholder="Tahun Terbit" type="number" value={publishedYear}
+          
+          onChange={
+            (e) => setPublishedYear(e.target.value)
+          } 
+        />
+        
+        <Input placeholder="Total Kopian" type="number" value={totalCopies} 
+            onChange={
+              (e) => setTotalCopies(e.target.value)
+            } 
+        />
+        
+        <Input placeholder="Kopian Tersedia" type="number" 
+               value={availableCopies} 
+               onChange={
+                  (e) => setAvailableCopies(e.target.value)
+               } 
+        />
+
+        <div className="space-y-1">
+          <label className="text-sm font-medium">Cover Image (max 5MB)</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={
+              
+                (e) => setCoverImage( e.target.files?.[0] ?? null)
+              
+              }
+            className="w-full text-sm"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <select
+            className="w-full border rounded-md px-3 py-2 text-sm bg-background"
+            value={categoryId}
+
+            onChange={
+              
+              (e) => setCategoryId(e.target.value)
+            
+            }
+          >
+            <option value="">Pilih Kategori</option>
+
+            {
+              categoriesData?.categories.map(
+                (cat) => (
+                  <option key={cat.id} 
+                          value={cat.id}>
+                            
+                            {cat.name}
+                  </option>
+              
+              ))
+            }
+          
+          </select>
+          
+          <Button
+            size="sm" variant="outline"
+            onClick={
+              
+              () => setShowAddCategory(!showAddCategory)
+            }
+          >
+            + Tambah Kategori Baru
+
+          </Button>
+          
+          
+            {showAddCategory && (
+              <div className="flex gap-2">
+                
+                <Input
+                  placeholder="Nama kategori baru"
+                  value={newCategoryName}
+                  
+                  onChange={
+
+                    (e) => setNewCategoryName(e.target.value)
+                  }
+                />
+                
+                <Button
+
+                  size="sm"
+                  disabled={isAddingCategory}
+                  onClick={handleAddCategory}
+                
+                >
+                  Simpan
+                </Button>
+              </div>
+
+            )
+          
+          }
+
+        </div>
+
+        {/* Pilih Author */}
+        <div className="space-y-2">
+          <select
+            className="w-full border rounded-md px-3 py-2 text-sm bg-background"
+            value={authorId}
+            
+            onChange={
+              (e) => {
+                setAuthorId(e.target.value)
+                const author = authorsData?.authors.find(
+
+                  (a) => String(a.id) === e.target.value
+                
+                )
+                if (author) setAuthorName(author.name)
+              
+              }
+            }
+          
+          >
+            <option value="">Pilih Author</option>
+            {authorsData?.authors.map((author) => (
+              <option key={author.id} 
+                      value={author.id}>{author.name}
+              </option>
+            
+            ))}
+          </select>
+          
+          <Button
+            size="sm" variant="outline"
+            onClick={
+            
+              () => setShowAddAuthor(!showAddAuthor)
+            
+            }
+          >
+            + Tambah Author Baru
+          
+          </Button>
+          
+          
+            {showAddAuthor && (
+
+              <div className="space-y-2">
+                
+                <Input
+                  placeholder="Nama author baru"
+                  value={newAuthorName}
+                  onChange={
+                  
+                    (e) => setNewAuthorName(e.target.value)
+                  
+                  }
+                />
+                
+                <Input
+                  placeholder="Bio author"
+                  value={newAuthorBio}
+                  onChange={
+                    (e) => setNewAuthorBio(e.target.value)
+                  
+                  }
+                />
+
+                <Button
+                  size="sm"
+                  disabled={isAddingAuthor}
+                  onClick={handleAddAuthor}
+                >
+                  Simpan
+                
+                </Button>
+              </div>
+            )
+          }
+        </div>
+
+        <div className="flex gap-2 justify-end">
+
+          <Button variant="outline" 
+          
+            onClick={
+              
+              () => navigate('/admin/books')
+            
+            }>
+
+            Batal
+          </Button>
+
+          <Button disabled={isPending} 
+            onClick={handleSubmit}>
+            
+            {isPending ? 'Menyimpan...' : isEdit ? 'Update' : 'Tambah'}
+          
+          </Button>
+        
+        </div>
+
+      </div>
+
+    </div>
+
+
+  )
+}
+
+export default AddEditBookPage

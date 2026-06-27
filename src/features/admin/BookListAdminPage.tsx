@@ -13,7 +13,7 @@ import { useDeleteBook } from '@/hooks/admin/useAdminBooksMutation';
 import BookFormModal from './BookFormModal';
 import type { Book } from '@/types';
 
-
+import { useNavigate } from 'react-router-dom';
 
 function BookListAdminPage() {
 
@@ -21,9 +21,14 @@ function BookListAdminPage() {
   const { data, isLoading, isError } = useAdminBooks(q);
 
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedBook, setSelectedBook] = useState<Book | null>(null)
+//   const [selectedBook, setSelectedBook] = useState<Book | null>(null)
+  const [selectedBook ] = useState<Book | null>(null)
+
   const { mutate: deleteBook } = useDeleteBook();
   
+  const navigate = useNavigate();
+
+
 
   if (isLoading) return <div>Loading...</div>
   if (isError) return <div>Failed to Load Books Data</div>
@@ -40,18 +45,18 @@ function BookListAdminPage() {
                className="max-w-sm" 
         />
         
-        <div className="border rounded-lg overflow-hidden">
-
-            <Button onClick={
+        <Button onClick={
                 () => {
-                    setModalOpen(true);
-                    setSelectedBook(null);
+                    // setModalOpen(true);
+                    // setSelectedBook(null);
                 
+                    navigate('/admin/books/add')
                 }
             }>
                 + Add Book
-            </Button>
+        </Button>
 
+        <div className="border rounded-lg overflow-hidden">
             <table className="w-full text-sm">
 
                 <thead className="bg-muted">
@@ -102,9 +107,10 @@ function BookListAdminPage() {
                                         <Button size="sm" variant="outline"
                                                 onClick={
                                                     () => {
-                                                        setModalOpen(true);
-                                                        setSelectedBook(book);
+                                                        // setModalOpen(true);
+                                                        // setSelectedBook(book);
 
+                                                         navigate(`/admin/books/edit/${book.id}`)
                                                     }
                                                 }>
                                         Edit            

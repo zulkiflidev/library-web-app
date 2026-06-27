@@ -15,6 +15,7 @@ import ProtectedRoute from "@/components/common/ProtectedRoute";
 import CategoryPage from "@/features/books/CategoryPage";
 import ProfilePage from "@/features/profile/ProfilePage";
 
+import AddEditBookPage from '../features/admin/AddEditBookPage'
 
 export const router = createBrowserRouter(
     [
@@ -76,6 +77,16 @@ export const router = createBrowserRouter(
                             path: '/admin/loans',
                             element: <BorrowsListPage />                
                         },
+                        {   path: '/admin/books/add', 
+                            element: <AddEditBookPage /> 
+                        },
+                        { 
+                            path: '/admin/books/edit/:id', 
+                            element: <AddEditBookPage /> 
+                        },
+
+
+
                     ]
                 }
 
