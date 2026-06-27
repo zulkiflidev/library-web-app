@@ -16,6 +16,7 @@ import CategoryPage from "@/features/books/CategoryPage";
 import ProfilePage from "@/features/profile/ProfilePage";
 
 import AddEditBookPage from '../features/admin/AddEditBookPage'
+import BookByAuthorPage from "@/features/books/BookByAuthorPage";
 
 export const router = createBrowserRouter(
     [
@@ -45,6 +46,11 @@ export const router = createBrowserRouter(
                 {
                     path: '/category',
                     element: <CategoryPage />
+                },
+
+                {
+                    path: '/author/:id',
+                    element: <BookByAuthorPage />
                 },
 
                 {

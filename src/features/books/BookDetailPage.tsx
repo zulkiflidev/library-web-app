@@ -23,7 +23,7 @@ function BookDetailPage() {
   if (!book) return <div>Book not found</div>
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 px-4 md:px-20">
         <div className="flex gap-8">        
             <img src={book!.coverImage} alt={book!.title} 
                  className="w-48 h-64 object-cover rounded-lg shadow"    />

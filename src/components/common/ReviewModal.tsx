@@ -40,7 +40,7 @@ function ReviewModal({open, onClose, bookId}: ReviewModalProps) {
   }
   
   return (
-    <div>
+    <div className="px-4 md:px-20">
         <Dialog open={open} onOpenChange={onClose}>
             <DialogContent>
                 <DialogHeader>

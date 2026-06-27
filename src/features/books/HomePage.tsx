@@ -16,7 +16,7 @@ import featuredImage from '@/assets/featuredImage.png'
 
 import useRecomendedBooks from '@/hooks/useRecommendedBooks';
 import usePopularAuthors from '@/hooks/usePopularAuthors';
-import authorDefaultPhoto from '@/assets/authorDefaultPhoto.png';
+import authorDefaultPhoto from '@/assets/DefaultPhoto.png';
 
 //==Icon for Menu
 import iconFiction from '@/assets/menu/fiction.png';
@@ -25,8 +25,7 @@ import iconFinance from '@/assets/menu/finance.png';
 import iconNonFiction from '@/assets/menu/non-fiction.png';
 import iconScience from '@/assets/menu/science.png';
 import iconSelfImprovement from '@/assets/menu/self-improvement.png';
-
-
+import bookIcon from '@/assets/BookIcon.svg';
 
 function HomePage() {
 
@@ -40,13 +39,13 @@ function HomePage() {
   const navigate = useNavigate();
 
   const ALLOWED_CATEGORIES_WITH_ICONS: Record<string, string> = {
-  'Fiction': iconFiction,
-  'Education': iconEducation,
-  'Finance': iconFinance,
-  'Non-Fiction': iconNonFiction,
-  'Science': iconScience,
-  'Self-Improvement': iconSelfImprovement,
-};
+    'Fiction': iconFiction,
+    'Education': iconEducation,
+    'Finance': iconFinance,
+    'Non-Fiction': iconNonFiction,
+    'Science': iconScience,
+    'Self-Improvement': iconSelfImprovement,
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -105,13 +104,13 @@ function HomePage() {
       }
       </div>
 
-      {/* Rekomenadisi Buku */}
+      {/* Rekomendasi Buku */}
       <div className="space-y-4">
 
         <h2 className="text-xl font-bold"> Recomended Books </h2>
         {isLoading && <div>Loading...</div>}
         {isError && <div>Error: Failed to load books</div> }
-        <div className="grid grid-cols-2  md:grid-cols-3  lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2  md:grid-cols-3  lg:grid-cols-5 gap-4">
 
           { books?.map(
             (book: Book) => (
@@ -132,7 +131,11 @@ function HomePage() {
 
                     (author:AuthorItem) => (
                       
-                        <div key={author.id} className="border rounded-lg p-4 space-y-1">
+                        <div key={author.id} className="border rounded-lg p-4 space-y-1"
+                             onClick={
+                                () => navigate(`/author/${author.id}`)
+                             }
+                        >
  
  
                             {/* <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-lg">
@@ -147,8 +150,10 @@ function HomePage() {
 
                             <h3 className="font-semibold text-sm">{author.name}</h3>
                             <p className="text-xs text-muted-foreground line-clamp-2">{author.bio ?? 'No bio available'}</p>
-                            <p className="text-xs text-muted-foreground">{author.bookCount} books</p>
-
+                            <div className="flex flex-row">
+                                <img src={bookIcon} alt="Book Icon" className="w-4 h-4 mr-1" />
+                                <p className="text-xs text-muted-foreground">{author.bookCount} books</p>
+                            </div>
                         </div>
 
                     )

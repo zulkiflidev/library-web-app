@@ -8,10 +8,16 @@ import type { RootState, AppDispatch } from "@/store"
 import { setSearch } from '@/features/books/uiSlice';
 
 import logo from '@/assets/logo.svg';
+import bagIcon from '@/assets/BagIcon.svg';
+import defaultPhoto from '@/assets/DefaultPhoto.png';
+
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 //import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { logout } from '@/features/auth/authSlice';
+
+import { ChevronDown } from 'lucide-react'
 
 import {
   DropdownMenu, 
@@ -31,14 +37,20 @@ function Navbar() {
   const search = useSelector( (state: RootState) => state.ui.search   );
 
   return (
-    <nav className="border-b px-6 py-3 flex items-center justify-between">
+    <nav className="border-b px-6 py-3 flex items-center justify-between px-4 md:px-20">
     
-      <div className="flex items-center gap-2 cursor-pointer">
-        <img src={logo} alt="logo" className="w-8 h-8" />
+      <Button variant="ghost" onClick={() => navigate('/')}>
 
-        <span className="font-bold text-lg">Booky</span>
+          <div className="flex items-center gap-2 cursor-pointer ">
+            <img src={logo} alt="logo" className="w-8 h-8" />
 
-      </div>
+            <span className="font-bold text-lg">Booky</span>
+
+          </div>      
+      
+      </Button>
+
+
 
       {/* Untuk pencarian Buku */}
       { token && (
@@ -49,7 +61,6 @@ function Navbar() {
          onChange={ (e) => dispatch( setSearch(e.target.value)  )  }
          
          />
-
       
       )}
 
@@ -61,9 +72,29 @@ function Navbar() {
         // </div>
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button variant="outline">
-                    👤 {user?.name}
+                <Button variant="ghost" 
+                        className="flex items-center gap-3 outline-none"
+                >
+                    {/* 👤 {user?.name} */}
+
+                      <div className="relative">
+                        <img src={bagIcon} alt="bag icon" className="w-6 h-6" />
+                      </div>
+
+                      <Avatar className="w-9 h-9">
+                          <AvatarImage src={user?.profilePhoto ?? undefined} />
+                          <AvatarFallback>
+                              <img src={defaultPhoto} 
+                                  alt="default photo" 
+                                  className="w-full h-full rounded-full object-cover" />
+                          </AvatarFallback>
+                      </Avatar>
+
+                      <span className="text-sm font-medium">{user?.name}</span>
+                      <ChevronDown className="w-4 h-4 text-muted-foreground" />
+
                 </Button>
+
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={ () => navigate('/profile')}>
@@ -96,10 +127,10 @@ function Navbar() {
               <DropdownMenuSeparator />
               <DropdownMenuItem className="text-destructive"
                                 onClick={ 
-                                  () => {
-                                    dispatch( logout() );
-                                    navigate('/login');
-                                  }
+                                    () => {
+                                      dispatch( logout() );
+                                      navigate('/login');
+                                    }
                                 }>
 
                 Logout

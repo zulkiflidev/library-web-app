@@ -23,7 +23,7 @@ function LoginPage() {
   const { mutate: login, isPending, isError } = useLogin();
 
   return (
-    <div className="max-w-sm mx-auto mt-20 space-y-4">
+    <div className="max-w-sm mx-auto mt-20 space-y-4 px-4 md:px-20">
         <h1 className="text-2xl font-bold text-center"></h1>
         
         <Input type="email" placeholder="Email" value={email}

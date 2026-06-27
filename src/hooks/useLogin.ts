@@ -25,7 +25,7 @@ const useLogin = () => {
                 return response.data;
             },
             onSuccess: (data) => {
-                 console.log('response data:', data)
+                console.log('user login -->', data)
                 dispatch( setCredentials({
                     token: data.data.token,
                     user: data.data.user,

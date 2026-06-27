@@ -19,7 +19,7 @@ function ProfilePage() {
 
 
   return (
-    <div className="max-w-2xl mx-auto space-y-8">
+    <div className="max-w-2xl mx-auto space-y-8 px-4 md:px-20">
         
 
         <div className="flex items-center gap-6">

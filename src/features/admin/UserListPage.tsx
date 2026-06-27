@@ -16,7 +16,7 @@ function UserListPage(){
     if (isError) return <div>Failed to Load Users Data</div>;
 
     return(
-        <div className="space-y-6">
+        <div className="space-y-6  px-4 md:px-20">
             <h1 className="text-2xl font-bold">User List</h1>
 
             <Input placeholder="Find name, email, phone..." value={q} onChange={ (e) => setQ(e.target.value)}

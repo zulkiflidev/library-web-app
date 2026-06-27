@@ -54,7 +54,7 @@ function CategoryPage() {
     }
 
     return (
-    <div className="flex gap-8">
+    <div className="flex gap-8 px-4 md:px-20">
 
         <div className="w-48 shrink-0 space-y-3">
 
