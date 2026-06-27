@@ -196,5 +196,19 @@ export interface AdminLoansResponse {
 
 
 
+//===Untuk Admin add buku 
+
+export interface AuthorItem {
+    id: number;
+    name: string;
+    bio: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface AuthorResponse {
+    authors: AuthorItem[];
+}
+
 
 
