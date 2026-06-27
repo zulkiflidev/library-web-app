@@ -4,9 +4,14 @@ import { useState } from 'react';
 import useAdminBooks from '@/hooks/admin/useAdminBooks';
 
 import { Input } from '@/components/ui/input';
-// import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 // import { Modal } from '@/components/ui/modal';
 import { Badge } from '@/components/ui/badge';
+
+
+import { useDeleteBook } from '@/hooks/admin/useAdminBooksMutation';
+import BookFormModal from './BookFormModal';
+import type { Book } from '@/types';
 
 
 
@@ -14,6 +19,11 @@ function BookListAdminPage() {
 
   const [q, setQ] = useState('');
   const { data, isLoading, isError } = useAdminBooks(q);
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedBook, setSelectedBook] = useState<Book | null>(null)
+  const { mutate: deleteBook } = useDeleteBook();
+  
 
   if (isLoading) return <div>Loading...</div>
   if (isError) return <div>Failed to Load Books Data</div>
@@ -31,6 +41,16 @@ function BookListAdminPage() {
         />
         
         <div className="border rounded-lg overflow-hidden">
+
+            <Button onClick={
+                () => {
+                    setModalOpen(true);
+                    setSelectedBook(null);
+                
+                }
+            }>
+                + Add Book
+            </Button>
 
             <table className="w-full text-sm">
 
@@ -76,6 +96,31 @@ function BookListAdminPage() {
                                 <td className="p-3">
                                     {book.rating}
                                 </td>
+
+                                <td className="p-3">
+                                    <div className="flex gap-2">
+                                        <Button size="sm" variant="outline"
+                                                onClick={
+                                                    () => {
+                                                        setModalOpen(true);
+                                                        setSelectedBook(book);
+
+                                                    }
+                                                }>
+                                        Edit            
+                                        </Button>
+
+                                        <Button size="sm" variant="destructive"
+                                                onClick={
+                                                    () => { deleteBook(book.id)}
+                                                }>
+                                        Delete        
+                                        </Button>
+                                    </div>
+
+
+                                </td>
+                                
                             
                             </tr>
                         ))
@@ -87,6 +132,20 @@ function BookListAdminPage() {
 
             </table>
         </div>
+
+
+        <BookFormModal 
+            open={modalOpen} 
+            onClose={
+                () =>{
+                    setModalOpen(false);
+                }
+            }
+            book={
+                selectedBook
+            }
+        />
+
 
     </div>
   )
