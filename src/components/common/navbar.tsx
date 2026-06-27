@@ -102,6 +102,8 @@ function Navbar() {
                                   }
                                 }>
 
+                Logout
+
               </DropdownMenuItem>
 
             </DropdownMenuContent>
