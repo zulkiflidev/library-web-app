@@ -2,12 +2,19 @@ import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+
 import useCategories from '@/hooks/useCategories'
 import useAuthors from '@/hooks/admin/useAuthors'
 import useAddAuthor from '@/hooks/admin/useAddAuthor'
 import useAddCategory from '@/hooks/admin/useAddCategory'
+
 import { useAddBook, useEditBook } from '@/hooks/admin/useAdminBooksMutation'
 import useBookDetail from '@/hooks/useBookDetail'
+
+import type { ChangeEvent } from 'react';
+
+
+
 
 function AddEditBookPage() {
   const navigate = useNavigate()
@@ -25,6 +32,8 @@ function AddEditBookPage() {
   const { mutate: addAuthor, isPending: isAddingAuthor } = useAddAuthor()
   const { mutate: addCategory, isPending: isAddingCategory } = useAddCategory()
 
+
+  //===untuk form....
   const [title, setTitle] = useState('')
   const [isbn, setIsbn] = useState('')
   const [description, setDescription] = useState('')
@@ -35,7 +44,7 @@ function AddEditBookPage() {
   const [categoryId, setCategoryId] = useState('')
   const [authorId, setAuthorId] = useState('')
   const [authorName, setAuthorName] = useState('')
-  const [coverImage, setCoverImage] = useState<File | null>(null)
+  // const [coverImage, setCoverImage] = useState<File | null>(null)
 
   // form tambah author baru
   const [showAddAuthor, setShowAddAuthor] = useState(false)
@@ -45,6 +54,12 @@ function AddEditBookPage() {
   // form tambah category baru
   const [showAddCategory, setShowAddCategory] = useState(false)
   const [newCategoryName, setNewCategoryName] = useState('')
+
+
+  //untuk upload gambar....
+
+  const [coverImageBase64, setCoverImageBase64] = useState<string>('');
+
 
   // isi form kalau mode edit
   useEffect(() => {
@@ -66,6 +81,8 @@ function AddEditBookPage() {
     }
   }, [bookData, isEdit])
 
+
+
   const handleAddAuthor = () => {
     addAuthor(
       { name: newAuthorName, bio: newAuthorBio },
@@ -83,7 +100,10 @@ function AddEditBookPage() {
 
       }
     )
+
   }
+
+
 
   const handleAddCategory = () => {
     addCategory(
@@ -98,39 +118,97 @@ function AddEditBookPage() {
         }
       }
     )
+
   }
 
-  const handleSubmit = () => {
-    const formData = new FormData()
-    
-    formData.append('title', title)
-    
-    formData.append('isbn', isbn)
-    formData.append('description', description)
-    formData.append('publishedYear', publishedYear)
-    formData.append('totalCopies', totalCopies)
-    
-    formData.append('availableCopies', availableCopies)
-    formData.append('categoryId', categoryId)
-    formData.append('authorId', authorId)
-    formData.append('authorName', authorName)
 
-    if (coverImage) formData.append('coverImage', coverImage)
+
+  // const handleSubmit = () => {
+  //   const formData = new FormData()    
+  //   formData.append('title', title)    
+  //   formData.append('isbn', isbn)
+  //   formData.append('description', description)
+  //   formData.append('publishedYear', publishedYear)
+  //   formData.append('totalCopies', totalCopies)    
+  //   formData.append('availableCopies', availableCopies)
+  //   formData.append('categoryId', categoryId)
+  //   formData.append('authorId', authorId)
+  //   formData.append('authorName', authorName)
+  //   if (coverImage) formData.append('coverImage', coverImage)
+  //   if (isEdit && id) {
+  //     editBook(
+  //       { id: Number(id), payload: formData as any },
+  //       { onSuccess: () => navigate('/admin/books') }
+  //     )
+  //   } 
+  //   else {      
+  //     addBook(
+  //       formData as any,
+  //       { onSuccess: () => navigate('/admin/books') }
+  //     )
+  //   }
+  // }
+
+  const handleSubmit = () => {
+
+    const payload = {
+
+      title, isbn, description,
+      publishedYear: Number(publishedYear),
+      totalCopies: Number(totalCopies),
+      availableCopies: Number(availableCopies),
+      categoryId: Number(categoryId),
+      authorId: Number(authorId),
+      authorName,
+      coverImage: coverImageBase64 || undefined,
+
+    }
 
     if (isEdit && id) {
-      editBook(
-        { id: Number(id), payload: formData as any },
-        { onSuccess: () => navigate('/admin/books') }
-      )
-    } else {
+
+        editBook(
+
+            { id: Number(id), payload },
+            { onSuccess: () => navigate('/admin/books') }
+        )
+
+    }
+    else{
+
       addBook(
-        formData as any,
-        { onSuccess: () => navigate('/admin/books') }
+
+        payload as any,
+        {
+          onSuccess: () => navigate('/admin/books')
+        }
       )
     }
+
   }
 
   const isPending = isAdding || isEditing
+
+  const handleCoverChange = ( e: ChangeEvent<HTMLInputElement>) =>{
+
+      const file = e.target.files?.[0];
+
+      if (!file) return
+
+      const reader = new FileReader()
+      reader.onloadend = () => {
+
+        setCoverImageBase64(reader.result as string)
+        //setCoverImage(file)
+      
+      }
+      reader.readAsDataURL(file);
+  
+  } 
+
+
+
+
+
 
   return (
     <div className="max-w-2xl mx-auto space-y-6">
@@ -179,16 +257,25 @@ function AddEditBookPage() {
 
         <div className="space-y-1">
           <label className="text-sm font-medium">Cover Image (max 5MB)</label>
+         
           <input
             type="file"
             accept="image/*"
             onChange={
               
-                (e) => setCoverImage( e.target.files?.[0] ?? null)
-              
+                // (e) => setCoverImage( e.target.files?.[0] ?? null)
+                handleCoverChange
+
               }
             className="w-full text-sm"
           />
+
+          { coverImageBase64 && (
+
+            <img src={ coverImageBase64} alt="preview"
+                 className="w-24 h-32 object-cover rounded" />
+          )}
+
         </div>
 
         <div className="space-y-2">
