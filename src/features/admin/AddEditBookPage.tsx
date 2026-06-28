@@ -12,8 +12,9 @@ import { useAddBook, useEditBook } from '@/hooks/admin/useAdminBooksMutation'
 import useBookDetail from '@/hooks/useBookDetail'
 
 import type { ChangeEvent } from 'react';
-
 import Breadcrumb from '@/components/common/Breadcrumb';
+
+import ProfileTabs from '@/components/common/ProfileTabs';
 
 
 
@@ -180,8 +181,6 @@ function AddEditBookPage() {
   
   } 
 
-
-
   return (
     <div className="max-w-2xl mx-auto space-y-6">
 
@@ -193,6 +192,8 @@ function AddEditBookPage() {
           ]
       } 
       />
+
+      <ProfileTabs variant="admin" />
 
       <h1 className="text-2xl font-bold">{isEdit ? 'Edit Buku' : 'Tambah Buku'}</h1>
 

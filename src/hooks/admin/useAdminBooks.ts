@@ -10,7 +10,11 @@ const useAdminBooks = (q: string = '') => {
             queryKey: ['adminBooks', q],
             queryFn: async () =>{
                 const response = await api.get('/admin/books', {
-                    params: { q, page: 1, limit: 20 }
+                    params: { 
+                    
+                        // q, page: 1, limit: 20 
+                    
+                    }
                 });
 
                 return response.data.data as AdminBooksResponse;

@@ -7,17 +7,23 @@ import Layout from "@/components/common/layout";
 import BookDetailPage from "@/features/books/BookDetailPage";
 import BorrowedListPage from "@/features/loans/BorrowedListPage";
 
-import UserListPage from '@/features/admin/UserListPage';
+import UserListAdminPage from '@/features/admin/UserListAdminPage';
 import BookListAdminPage from '@/features/admin/BookListAdminPage';
-import BorrowsListPage from '@/features/admin/BorrowsListPage';
+import BorrowedListAdminPage from '@/features/admin/BorrowedListAdminPage';
 import ProtectedRoute from "@/components/common/ProtectedRoute";
 
 import CategoryPage from "@/features/books/CategoryPage";
 import ProfilePage from "@/features/profile/ProfilePage";
 
 import AddEditBookPage from '../features/admin/AddEditBookPage'
+import PreviewAdminPage from '../features/admin/PreviewAdminPage';
+
 import BookByAuthorPage from "@/features/books/BookByAuthorPage";
 import AuthLayout from "@/components/common/authLayout";
+
+import ReviewsListPage from "@/features/reviews/ReviewsListPage";
+
+
 
 export const router = createBrowserRouter(
     [
@@ -51,13 +57,20 @@ export const router = createBrowserRouter(
                     children: [
 
                         {
+                            path: '/profile',
+                            element: <ProfilePage />
+                        },
+
+                        {
                             path: '/loans',
                             element: <BorrowedListPage />
                         },
+                       
                         {
-                            path: '/profile',
-                            element: <ProfilePage />
-                        }
+                            path: '/reviews',
+                            element: <ReviewsListPage />
+                        },                        
+                        
                     ]
                 },
 
@@ -66,7 +79,7 @@ export const router = createBrowserRouter(
                     children: [
                         {
                             path: '/admin/users',
-                            element: <UserListPage />                
+                            element: <UserListAdminPage />                
                         },
                         {
                             path: '/admin/books',
@@ -74,7 +87,7 @@ export const router = createBrowserRouter(
                         },
                         {
                             path: '/admin/loans',
-                            element: <BorrowsListPage />                
+                            element: <BorrowedListAdminPage />                
                         },
                         {   path: '/admin/books/add', 
                             element: <AddEditBookPage /> 
@@ -84,6 +97,10 @@ export const router = createBrowserRouter(
                             element: <AddEditBookPage /> 
                         },
 
+                        { 
+                            path: '/admin/books/preview/:id', 
+                            element: <PreviewAdminPage /> 
+                        },
 
 
                     ]

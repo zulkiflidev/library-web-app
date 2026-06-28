@@ -128,6 +128,8 @@ function BookDetailPage() {
             )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            
+            
             {book!.reviews?.map((review) => (
                 <div key={review.id} className="border rounded-lg p-4 space-y-1">
                     <div className="flex items-center gap-2">

@@ -186,7 +186,7 @@ export interface AdminLoan {
     returnedAt: string | null;
     durationDays: number;
     borrower: Borrower;
-    book: Pick<Book, 'id' | 'title' | 'coverImage' | 'author' | 'category'>;
+    book: Book; //Pick<Book, 'id' | 'title' | 'coverImage' | 'author' | 'category'>;
 
 }
 
