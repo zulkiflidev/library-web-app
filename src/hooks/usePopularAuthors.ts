@@ -11,7 +11,7 @@ const usePopularAuthors = () =>{
             queryFn: async () => {
 
                 const response = await api.get('/authors/popular', {
-                    params: { limit: 6 }
+                    params: { limit: 4 }
                 });
                 return response.data.data.authors as AuthorItem[];
 

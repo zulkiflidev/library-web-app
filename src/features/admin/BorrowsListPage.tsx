@@ -9,6 +9,9 @@ import { Input } from '@/components/ui/input';
 // import { Modal } from '@/components/ui/modal';
 import { Badge } from '@/components/ui/badge';
 
+import Breadcrumb from '@/components/common/Breadcrumb';
+
+
 
 function BorrowsListPage() {
 
@@ -21,6 +24,15 @@ function BorrowsListPage() {
 
   return (
     <div className="space-y-6 px-4 md:px-20">
+
+        <Breadcrumb items={
+            [
+                { label: 'Home', href: '/' },
+                { label: 'Borrows List (Admin)' },
+            ]
+        } 
+        />
+
 
         <h1 className="text-2xl font-bold"> Borrows List </h1>        
 

@@ -14,6 +14,8 @@ import BookFormModal from './BookFormModal';
 import type { Book } from '@/types';
 
 import { useNavigate } from 'react-router-dom';
+import Breadcrumb from '@/components/common/Breadcrumb';
+
 
 function BookListAdminPage() {
 
@@ -37,6 +39,14 @@ function BookListAdminPage() {
 
   return (
     <div className="space-y-6 px-4 md:px-20">
+
+        <Breadcrumb items={
+            [
+                { label: 'Home', href: '/' },
+                { label: 'Book List (Admin)' },
+            ]
+        } 
+        />        
         
         <h1 className="text-2xl font-bold">Book List</h1>
 

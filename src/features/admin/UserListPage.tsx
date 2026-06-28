@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 // import { Modal } from '@/components/ui/modal';
 import { Badge } from '@/components/ui/badge';
 
+import Breadcrumb from '@/components/common/Breadcrumb';
 
 function UserListPage(){
 
@@ -17,6 +18,15 @@ function UserListPage(){
 
     return(
         <div className="space-y-6  px-4 md:px-20">
+
+            <Breadcrumb items={
+                [
+                    { label: 'Home', href: '/' },
+                    { label: 'User List (Admin)' },
+                ]
+            } 
+            />
+
             <h1 className="text-2xl font-bold">User List</h1>
 
             <Input placeholder="Find name, email, phone..." value={q} onChange={ (e) => setQ(e.target.value)}

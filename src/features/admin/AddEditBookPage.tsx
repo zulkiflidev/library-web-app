@@ -13,6 +13,9 @@ import useBookDetail from '@/hooks/useBookDetail'
 
 import type { ChangeEvent } from 'react';
 
+import Breadcrumb from '@/components/common/Breadcrumb';
+
+
 
 
 
@@ -181,6 +184,16 @@ function AddEditBookPage() {
 
   return (
     <div className="max-w-2xl mx-auto space-y-6">
+
+
+      <Breadcrumb items={
+          [
+              { label: 'Home', href: '/' },
+              { label: 'Add Book (Admin)' },
+          ]
+      } 
+      />
+
       <h1 className="text-2xl font-bold">{isEdit ? 'Edit Buku' : 'Tambah Buku'}</h1>
 
       <div className="space-y-4">

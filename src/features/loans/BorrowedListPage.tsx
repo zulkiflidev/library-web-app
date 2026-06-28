@@ -13,6 +13,8 @@ import useReviewBook from '@/hooks/useReviewBook';
 // import useDeleteReview from '@/hooks/useDeleteReview';
 
 import type { MyReview } from '@/types';
+import Breadcrumb from '@/components/common/Breadcrumb';
+
 
 function BorrowedListPage() {
 
@@ -36,14 +38,19 @@ function BorrowedListPage() {
 
   }
 
-
-
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error: Failed to load loans list...</div>
 
   return (
     <div  className="space-y-6 px-4 md:px-20">
     
+    <Breadcrumb items={
+        [
+            { label: 'Home', href: '/' },
+            { label: 'Borrowed List' },
+        ]
+    } 
+    />
         <h1 className="text-2xl font-bold">My Loans</h1>
         <div className="flex gap-2">
             {

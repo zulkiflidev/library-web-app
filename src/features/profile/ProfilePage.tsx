@@ -3,7 +3,7 @@
 import useProfile from '@/hooks/useProfile';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
-
+import Breadcrumb from '@/components/common/Breadcrumb';
 
 
 function ProfilePage() {
@@ -20,7 +20,13 @@ function ProfilePage() {
 
   return (
     <div className="max-w-2xl mx-auto space-y-8 px-4 md:px-20">
-        
+        <Breadcrumb items={
+            [
+                { label: 'Home', href: '/' },
+                { label: 'Profile' },
+            ]
+        } 
+        />        
 
         <div className="flex items-center gap-6">
             <Avatar className="w-20 h-20">
