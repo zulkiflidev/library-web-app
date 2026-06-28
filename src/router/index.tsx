@@ -17,6 +17,7 @@ import ProfilePage from "@/features/profile/ProfilePage";
 
 import AddEditBookPage from '../features/admin/AddEditBookPage'
 import BookByAuthorPage from "@/features/books/BookByAuthorPage";
+import AuthLayout from "@/components/common/authLayout";
 
 export const router = createBrowserRouter(
     [
@@ -30,15 +31,7 @@ export const router = createBrowserRouter(
                     element: <HomePage />
 
                 },
-                {
-                    path: '/login',
-                    element: <LoginPage />
-
-                },
-                {
-                    path: '/register',
-                    element: <RegisterPage />  
-                },
+                
                 {
                     path: '/books/:id',
                     element: <BookDetailPage />
@@ -98,6 +91,23 @@ export const router = createBrowserRouter(
 
             ]
         },
+        {
+            path: '/',
+            element: <AuthLayout />,
+            children: [
+                {
+                    path: '/login',
+                    element: <LoginPage />
+                },
+                {
+                    path: '/register',
+                    element: <RegisterPage />
+                }
+
+            ]
+        },
+
+
     ]
 );
 

@@ -15,8 +15,11 @@ import BookCard from '@/features/books/BookCard';
 import { Checkbox  } from "@/components/ui/checkbox";
 
 import type { Book } from "@/types";
+import Breadcrumb from "@/components/common/Breadcrumb";
+
 
 function CategoryPage() {
+
 
     const [searchParams] = useSearchParams();
     const dispatch = useDispatch<AppDispatch>();
@@ -55,6 +58,14 @@ function CategoryPage() {
 
     return (
     <div className="flex gap-8 px-4 md:px-20">
+
+        <Breadcrumb items={
+            [
+                { label: 'Home', href: '/' },
+                { label: 'Book Category' },
+            ]
+        } 
+        />        
 
         <div className="w-48 shrink-0 space-y-3">
 

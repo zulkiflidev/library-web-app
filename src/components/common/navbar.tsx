@@ -56,7 +56,7 @@ function Navbar() {
       { token && (
 
         <input type="text" placeholder="Search"
-         className="border rounded-md px-3 py-1.5 text-sm w-72 bg-background" 
+         className="border rounded-md px-3 py-1.5 text-sm w-100 bg-background" 
          value={search}
          onChange={ (e) => dispatch( setSearch(e.target.value)  )  }
          
@@ -149,7 +149,7 @@ function Navbar() {
             Login
           </Button>
 
-          <Button onClick={() => navigate('/register')}>
+          <Button className="bg-[#1C65DA]" onClick={() => navigate('/register')}>
             Register
           </Button>
 

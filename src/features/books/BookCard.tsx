@@ -1,5 +1,9 @@
 import type { Book } from '@/types';
-import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { 
+    Card, 
+    CardContent, 
+    // CardFooter 
+} from '@/components/ui/card';
 
 //nnati dulu, mungkin entar dipake
 // import { Badge } from '@/components/ui/badge';
@@ -18,12 +22,15 @@ function BookCard({ book }: BookCardProps) {
     const navigate =  useNavigate();
 
     return (
-        <Card className = "flex flex-col overflow-hidden transition-shadow hover:shadow-lg "
+        <Card className = "flex flex-col overflow-hidden transition-shadow hover:shadow-lg cursor-pointer"
         onClick={() => navigate(`/books/${book.id}`)}
         >
-            
-            <img src={book.coverImage} alt={book.title} className="w-full h-48 object-cover" />
-            
+            <div className="relative aspect-[2/3]">
+                <img src={book.coverImage} 
+                    alt={book.title} 
+                    className="absolute inset-0 w-full h-full object-cover" />
+            </div>
+
             <CardContent className="flex-1 p-4 space-y-2">
                 <h3 className="text-lg font-semibold line-clamp-2">{book.title}</h3>
                 <p className="text-xs text-muted-foreground">{book.author.name}</p>
@@ -42,9 +49,9 @@ function BookCard({ book }: BookCardProps) {
                  
 
             </CardContent>
-            <CardFooter>
+            {/* <CardFooter>
 
-            </CardFooter>
+            </CardFooter> */}
 
         </Card>
     );

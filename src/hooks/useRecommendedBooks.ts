@@ -11,7 +11,7 @@ const useRecomendedBooks = () => {
             queryKey: ['recommendedBooks'],
             queryFn: async () => { 
                 const response = await api.get('/books/recommend', {
-                    params: { by: 'rating', limit: 8, page: 1 },
+                    params: { by: 'rating', limit: 10, page: 1 },
                 });
 
                 console.log('recommend response:', response.data)
