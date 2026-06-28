@@ -4,10 +4,15 @@ import useProfile from '@/hooks/useProfile';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 import Breadcrumb from '@/components/common/Breadcrumb';
+import defaultPhoto from '@/assets/DefaultPhoto.png';
+import { Button } from '@/components/ui/button';
 
+// import { useNavigate } from 'react-router-dom'
+import ProfileTabs from '@/components/common/ProfileTabs';
 
 function ProfilePage() {
 
+//   const navigate = useNavigate();    
   const { data, isLoading, isError } = useProfile();
 
   if (isLoading) return <div>Loading...</div>;
@@ -19,28 +24,93 @@ function ProfilePage() {
 
 
   return (
-    <div className="max-w-2xl mx-auto space-y-8 px-4 md:px-20">
+    <div className="space-y-8 px-4 md:px-20">
         <Breadcrumb items={
             [
                 { label: 'Home', href: '/' },
-                { label: 'Profile' },
+                { label: 'My Profile' },
             ]
         } 
         />        
 
-        <div className="flex items-center gap-6">
-            <Avatar className="w-20 h-20">
 
+        {/* <div className="flex flex-row justify-start w-1/2 bg-[#F5F5F5] gap-10 rounded-full ">
+
+            <div className="p-3 w-1/3 text-center">
+                <Button onClick={
+                    () => navigate('/profile')
+                } className="bg-white text-black font-bold w-full" 
+                >
+                    Profile
+                </Button>
+            </div>
+
+            <div className="p-3 w-1/3 text-center">
+                <Button onClick={
+                    () => navigate('/loans')
+                } variant="ghost"
+                >
+                    Borrowed List
+                </Button>
+            </div>
+
+            <div className="p-3 w-1/3 text-center">
+                <Button onClick={
+                    () => navigate('/reviews')
+                } variant="ghost" 
+                >
+                    Reviews
+                </Button>
+            </div>
+        </div>    */}
+
+        <ProfileTabs />
+
+
+        <h1 className="text-2xl font-bold">My Profile</h1>
+
+        <div className="flex flex-col items-start gap-6 border rounded-lg p-4 space-y-3 w-1/3">
+            
+            <Avatar className="w-20 h-20">
                 <AvatarImage src={ profile.profilePhoto  ?? undefined } />
-                <AvatarFallback> {profile.name.charAt(0).toUpperCase()}  </AvatarFallback>
+                <AvatarFallback> 
+                    {/* {profile.name.charAt(0).toUpperCase()}   */}
+                    <img src={defaultPhoto} 
+                        alt="default photo" 
+                        className="w-full h-full rounded-full object-cover" />
+
+                </AvatarFallback>
 
             </Avatar>
 
-            <div className="space-y-1">
-                <h1 className="text-2xl font-bold"> { profile.name } </h1>
+            <div className="w-full">
+                
+                <div className="flex justify-between w-full gap-1">
+                    <p className="text-sm"> Name </p>
+                    <p className="text-sm font-bold"> { profile.name } </p>
+                </div>
+
+                <div className="flex justify-between w-full gap-1">
+                    <p className="text-sm"> Email </p>
+                    <p className="text-sm font-bold"> { profile.email } </p>
+                </div>
+
+
+                <div className="flex justify-between w-full gap-1">
+                    <p className="text-sm"> Phone Number </p>
+                    <p className="text-sm font-bold"> { profile.phone } </p>
+                </div>
+
+                <Button className="bg-[#1C65DA] text-white mt-5 w-full" variant="ghost">
+                    Update Profile
+                </Button>
+
+
+{/* 
+                <p className="text-2xl font-bold"> { profile.name } </p>
                 <p className="text-muted-foreground"> { profile.email } </p>
                 <p className="text-muted-foreground"> { profile.phone } </p>
-
+ */}
             </div>
 
             {/* Statitik Loan, perlukah? kayaknya pending dulu deh... */}

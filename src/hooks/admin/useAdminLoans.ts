@@ -11,7 +11,11 @@ const useAdminLoans = (q: string = '') => {
             queryKey: ['adminLoans', q],
             queryFn: async () => {
                 const response = await api.get('/admin/loans',{
-                    params: { q, page: 1, limit: 20 }
+                    params: { 
+                                // q, 
+                                // page: 1, 
+                                // limit: 20 
+                            }
                 })
                 return response.data.data as AdminLoansResponse;
             }

@@ -71,6 +71,7 @@ function Navbar() {
         //   <span className="text-sm"> Nama User</span>
         // </div>
         <DropdownMenu>
+          
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" 
                         className="flex items-center gap-3 outline-none"
@@ -101,7 +102,11 @@ function Navbar() {
                 Profile
               </DropdownMenuItem>
               <DropdownMenuItem onClick={ () => navigate('/loans')}>
-                My Loans
+                Borrowed List
+              </DropdownMenuItem>
+
+              <DropdownMenuItem onClick={ () => navigate('/reviews')}>
+                Reviews
               </DropdownMenuItem>
 
               {
@@ -117,7 +122,7 @@ function Navbar() {
                       </DropdownMenuItem>
 
                       <DropdownMenuItem onClick={ () => navigate('/admin/loans')}>
-                        Admin - Loans
+                        Admin - Borrowed List  
                       </DropdownMenuItem>
 
                   </div>

@@ -1,44 +1,19 @@
-//import React from 'react'
-
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 
-import ReviewModal from '@/components/common/ReviewModal';
-
-import useLoans from '@/hooks/useLoans';
-import useReturnBook from '@/hooks/useReturnBook';
-import useMyReviews from '@/hooks/useMyReviews';
-import useReviewBook from '@/hooks/useReviewBook';
-// import useDeleteReview from '@/hooks/useDeleteReview';
-
-import type { MyReview } from '@/types';
+// import ReviewModal from '@/components/common/ReviewModal';
+// import useLoans from '@/hooks/useLoans';
+import useLoans from '@/hooks/admin/useAdminLoans';
 import Breadcrumb from '@/components/common/Breadcrumb';
 
 import ProfileTabs from '@/components/common/ProfileTabs'
- 
 
-function BorrowedListPage() {
+
+function BorrowedListAdminPage() {
 
   const [status, setStatus] = useState('all');
   const { data, isLoading, isError } = useLoans( status );
-
-  const [selectedBookId, setSelectedBookId] = useState<number | null>(null)
-  const { mutate: returnBook, isPending: isReturning } = useReturnBook();
-
-  
-  //==Untuk daftar review yg sudah diberikan...  
-  const { data: myReviews } = useMyReviews();
-  const getMyReview = (bookId: number): MyReview | undefined =>  {
-     return myReviews?.reviews.find( (r) => r.book.id === bookId);
-  }
-
-  //==Untuk hapus review
-  const { deleteReviewMutation } = useReviewBook(0);
-  const deleteReview = (reviewId: number) => { 
-    deleteReviewMutation.mutate(reviewId);
-
-  }
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error: Failed to load loans list...</div>
@@ -54,7 +29,7 @@ function BorrowedListPage() {
         } 
         />
         
-        <ProfileTabs />
+        <ProfileTabs variant="admin" />
 
         <h1 className="text-2xl font-bold">My Loans</h1>
         <div className="flex gap-2">
@@ -129,15 +104,6 @@ function BorrowedListPage() {
                                                 <h3 className="text-md font-bold">{loan.book.title}</h3>                                                                                           
                                                 <p className="text-xs text-muted-foreground">{loan.book.author.name}</p> 
 
-                                                {/* <Badge variant={
-                                                    loan.status === 'BORROWED' ? 'default' : 
-                                                    loan.status === 'OVERDUE' ? 'destructive' : 'outline'
-                                                } >
-
-                                                    { loan.displayStatus }
-
-                                                </Badge> */}
-
                                                 <div className="flex flex-row gap-2">
                                                     <p className="text-xs font-bold">
                                                         {
@@ -169,68 +135,10 @@ function BorrowedListPage() {
                                     </div>
 
                                     <div className="flex flex-col items-center justify-center">
-                                        {/* Terkait Return, Give Review */}
-                                        { (loan.status === 'BORROWED' || loan.status === 'OVERDUE') && 
-                                            (
-                                                <div className="flex flex-col gap-2">
-
-                                                    <Button size="sm" variant="destructive"
-                                                    disabled={isReturning}
-                                                    onClick={ () => returnBook(loan.id)}
-                                                    >
-                                                        {isReturning ? 'Returning...' : 'Return Book'}
-                                                    </Button>
-                                                </div>
-                                            )                        
-                                        }
                                         
-                                        {
-                                            loan.status === 'RETURNED' && (
-                                                <div className="flex flex-col gap-2">
-                                                    { 
-                                                        getMyReview(loan.book.id) ? 
-                                                        (
-                                                            <div className="flex flex-row gap-5">
-                                                                <div className="flex flex-row items-center gap-2">
-                                                                    <p className="text-xs text-muted-foreground">
-                                                                        ★ { getMyReview(loan.book.id)?.star }   
-                                                                    </p>
-                                                                    <p className="text-xs text-muted-foreground">
-                                                                        { getMyReview(loan.book.id)?.comment }
-                                                                    </p>
-                                                                </div>
-
-                                                                <Button size="sm" variant="outline" 
-                                                                onClick={
-                                                                    () => setSelectedBookId(loan.book.id)
-                                                                }>                                                                    
-                                                                    Edit Review
-                                                                </Button>
-                                                                
-                                                                <Button size="sm" variant="destructive" onClick={
-                                                                    () => {
-                                                                        const review = getMyReview(loan.book.id);
-                                                                        if (review) deleteReview(review.id);
-                                                                    }
-                                                                }>
-                                                                    Delete Review                                                                    
-                                                                </Button>
-                                                                      
-                                                            </div>
-                                                        ) 
-                                                        : 
-                                                        (
-                                                            <Button size="sm"  
-                                                                    onClick={ () => setSelectedBookId(loan.book.id) }
-                                                                    className="bg-[#1C65DA]"
-                                                            >
-                                                                Give Review
-                                                            </Button>
-                                                        )
-                                                    }
-                                                </div>
-                                            )
-                                        }
+                                        <p className="text-xs font-medium"> Borower's Name</p>                                        
+                                        <p className="text-sm font-bold">{ loan.borrower.name }</p>                                        
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -241,15 +149,9 @@ function BorrowedListPage() {
             }
         </div>
 
-        <ReviewModal open={selectedBookId !== null}
-                 onClose={ () => setSelectedBookId(null) }
-                 bookId={selectedBookId ?? 0}
-    
-        />
-
     </div>    
 
   )
 }
 
-export default BorrowedListPage
+export default BorrowedListAdminPage
