@@ -8,6 +8,8 @@ import authorDefaultPhoto from '@/assets/DefaultPhoto.png';
 import bookIcon from '@/assets/BookIcon.svg';
 import Breadcrumb from '@/components/common/Breadcrumb';
 
+// import NoBookCoverImage from '@/assets/noBookCoverImage.webp';
+
 
 function BookByAuthorPage() {
   

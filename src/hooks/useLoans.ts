@@ -4,15 +4,21 @@ import type { LoanResponse } from '@/types';
 
 
 
-const useLoans = (status: string = 'all') => {
+const useLoans = (q: string ='', status: string = 'all') => {
 
     return useQuery(
 
         {
-            queryKey: ['loans', status],
+            queryKey: ['loans', status, q, status],
             queryFn: async () => {
                 const response = await api.get('/loans/my', {
-                    params: { status, page: 1, limit: 10 },
+                    params: { 
+                        q,
+                        status, 
+                        page: 1, 
+                        limit: 20 
+                        
+                    },
                 });
                 return response.data.data as LoanResponse;
 

@@ -17,6 +17,8 @@ import { Checkbox  } from "@/components/ui/checkbox";
 import type { Book } from "@/types";
 import Breadcrumb from "@/components/common/Breadcrumb";
 
+// import NoBookCoverImage from '@/assets/noBookCoverImage.webp';
+
 
 function CategoryPage() {
 

@@ -8,9 +8,10 @@ const userTabs = [
 ]
 
 const adminTabs = [
-  { label: 'Users', href: '/admin/users' },
-  { label: 'Books', href: '/admin/books' },
   { label: 'Borrowed List', href: '/admin/loans' },
+  { label: 'User', href: '/admin/users' },
+  { label: 'Book List', href: '/admin/books' },
+
 ]
 
 interface ProfileTabsProps {
