@@ -125,12 +125,12 @@ function BorrowedListPage() {
                                     <div className="flex flex-col gap-2 w-full">                               
                                         <div className="flex flex-row justify-between w-full">
                                             <div>
-                                                <p className="font-bold">
+                                                <p className="font-bold text-xs">
                                                     Status: <Badge variant="secondary">{loan.displayStatus}</Badge>
                                                 </p>
                                             </div>
                                             <div className="flex flex-row gap-5 items-center">
-                                                <p className="font-bold">Due Date:</p>
+                                                <p className="font-bold text-xs">Due Date:</p>
 
                                                 <Badge variant="secondary">
                                                     
@@ -140,8 +140,8 @@ function BorrowedListPage() {
                                                             day: 'numeric',
                                                             month: 'long',
                                                             year: 'numeric',
-                                                            hour: '2-digit',
-                                                            minute: '2-digit'
+                                                            // hour: '2-digit',
+                                                            // minute: '2-digit'
                                                         })
                                                         .replace(/\s*pukul\s*/i, ', ')
                                                     }                                                
@@ -152,16 +152,16 @@ function BorrowedListPage() {
                                         
                                         <hr className="w-full border-t border-gray-300 my-1" />
 
-                                        <div className="flex flex-row justify-between w-full">
+                                        <div className="flex flex-col md:flex-row justify-between w-full">
                                             <div className="flex flex-row justify-center gap-2">
-                                                <div>
+                                                <div className="w-full md:w-auto">
                                                     <img src={loan.book.coverImage ? loan.book.coverImage : NoBookCoverImage} 
                                                          alt={loan.book.title} 
                                                         className="w-25 h-31 object-cover rounded" />
                                                 </div>
                                                 <div>
                                                     {/* info detail buku */}
-                                                    <div className="flex-1 space-y-3">
+                                                    <div className="flex-1 space-y-2">
                                                     
                                                         <Badge variant="outline"> {loan.book.category?.name }</Badge> 
 
@@ -178,23 +178,23 @@ function BorrowedListPage() {
                                                         </Badge> */}
 
                                                         <div className="flex flex-row gap-2">
-                                                            <p className="text-xs font-bold">
+                                                            <p className="text-xs font-bold whitespace-nowrap">
                                                                 {
                                                                     new Date(loan.borrowedAt).toLocaleDateString('id-ID',{
                                                                         day: 'numeric',
                                                                         month: 'long',
                                                                         year: 'numeric',
-                                                                        hour: '2-digit',
-                                                                        minute: '2-digit'
+                                                                        // hour: '2-digit',
+                                                                        // minute: '2-digit'
                                                                     }).replace(/\s*pukul\s*/i, ', ')
                                                                 }
                                                             </p>
 
                                                             
-                                                            <p className="text-xs font-bold">
+                                                            <p className="text-xs font-bold whitespace-nowrap">
                                                                 -   Durations {
                                                                     loan.durationDays
-                                                                }
+                                                                } Days
                                                             </p>
                                                         </div>
                                                         {/* <p className="text-xs text-muted-foreground">
@@ -207,46 +207,51 @@ function BorrowedListPage() {
 
                                             </div>
 
-                                            <div className="flex flex-col items-center justify-center">
+                                            <div className="flex flex-col items-center justify-center w-full md:w-auto">
                                                 {/* Terkait Return, Give Review */}
-                                                { (loan.status === 'BORROWED' || loan.status === 'OVERDUE') && 
-                                                    (
-                                                        <div className="flex flex-col gap-2">
+                                                { 
+                                                    (loan.status === 'BORROWED' || loan.status === 'OVERDUE') && 
+                                                        (
+                                                            <div className="flex flex-col gap-2 w-full pt-2 md:w-auto" >
 
-                                                            <Button size="sm" variant="destructive"
-                                                            disabled={isReturning}
-                                                            onClick={ () => returnBook(loan.id)}
-                                                            >
-                                                                {isReturning ? 'Returning...' : 'Return Book'}
-                                                            </Button>
-                                                        </div>
-                                                    )                        
+                                                                <Button size="sm" variant="destructive"
+                                                                disabled={isReturning}
+                                                                onClick={ () => returnBook(loan.id)}
+                                                                >
+                                                                    {isReturning ? 'Returning...' : 'Return Book'}
+                                                                </Button>
+                                                            </div>
+                                                        )                        
                                                 }
                                                 
                                                 {
                                                     loan.status === 'RETURNED' && (
-                                                        <div className="flex flex-col gap-2">
+                                                        <div className="flex flex-col gap-2 w-full pt-2 md:w-auto">
                                                             { 
                                                                 getMyReview(loan.book.id) ? 
                                                                 (
-                                                                    <div className="flex flex-row gap-5">
+                                                                    <div className="flex flex-col md:flex-row gap-5 w-full pt-2 md:w-auto">
                                                                         <div className="flex flex-row items-center gap-2">
                                                                             <p className="text-xs text-muted-foreground">
-                                                                                ★ { getMyReview(loan.book.id)?.star }   
+                                                                                {/* ★ { getMyReview(loan.book.id)?.star }    */}
                                                                             </p>
                                                                             <p className="text-xs text-muted-foreground">
-                                                                                { getMyReview(loan.book.id)?.comment }
+                                                                                {/* { getMyReview(loan.book.id)?.comment } */}
                                                                             </p>
                                                                         </div>
 
-                                                                        <Button size="sm" variant="outline" 
-                                                                        onClick={
+                                                                        <Button size="sm" 
+                                                                            className="rounded-xl"
+                                                                            variant="outline" 
+                                                                            onClick={
                                                                             () => setSelectedBookId(loan.book.id)
                                                                         }>                                                                    
                                                                             Edit Review
                                                                         </Button>
                                                                         
-                                                                        <Button size="sm" variant="destructive" onClick={
+                                                                        <Button size="sm" variant="destructive" 
+                                                                            className="rounded-xl"
+                                                                            onClick={
                                                                             () => {
                                                                                 const review = getMyReview(loan.book.id);
                                                                                 if (review) deleteReview(review.id);
@@ -260,8 +265,9 @@ function BorrowedListPage() {
                                                                 : 
                                                                 (
                                                                     <Button size="sm"  
+                                                                            className="rounded-xl bg-[#1C65DA] mt-2"                                                                    
                                                                             onClick={ () => setSelectedBookId(loan.book.id) }
-                                                                            className="bg-[#1C65DA]"
+                                                                             
                                                                     >
                                                                         Give Review
                                                                     </Button>

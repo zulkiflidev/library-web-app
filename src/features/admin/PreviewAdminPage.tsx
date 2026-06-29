@@ -43,11 +43,13 @@ function PreviewAdminPage() {
 
   return (
     <div className="space-y-8 px-4 md:px-20 mt-10">
+
         {/* <Breadcrumb items={[
             { label: 'Home', href: '/' },
             { label: 'Books', href: '/' },
             { label: book.title },
         ]} /> */}
+        
         <Button variant="ghost" onClick={() => navigate(-1)}>
             <ArrowLeft className="w-16 h-16 mr-4" />
             <p className="font-bold text-xl">
@@ -55,9 +57,10 @@ function PreviewAdminPage() {
             </p>
         </Button>
 
-        <div className="flex gap-8">        
+        <div className="flex flex-col  md:flex-row gap-8">        
             <img src={book!.coverImage ? book!.coverImage : NoBookCoverImage} alt={book!.title} 
-                 className="w-48 h-64 object-cover rounded-lg shadow"    />
+                 className="self-center justify-center items-center w-48 h-64 
+                            object-cover rounded-lg shadow"    />
         
             <div className="flex-1 space-y-3">
                 
@@ -102,27 +105,48 @@ function PreviewAdminPage() {
                 <p className="text-sm font-bold"> Description </p>
                 <p className="text-sm text-muted-foreground leading-relaxed">{book!.description}</p>
 
+
+
                 {/* <button className="bg-primary text-primary-foreground px-6 py-2 rounded-md text-sm 
                                        font-medium disabled:opacity-50" disabled={book.availableCopies === 0}>
                     {book.availableCopies === 0 ? 'Out of Stock' : 'Add to Cart'}
                 </button> */}
 
-                <Button 
-                variant= "default"
-                className="bg-[#1C65DA]"
-                disabled={book!.availableCopies === 0 || isPending}
-                onClick={() => borrowBook(7)}>
-
-                    {isPending ? 'Loading...' : (
-                        book!.availableCopies === 0 ? 'Out of Stock' : 'Borrow Book'
-                    )}
-
-                </Button>
 
 
+                {/* <div className="flex gap-4 justify-center md:justify-start items-center w-full md:w-1/4"> */}
+                <div className="fixed bottom-0 left-0 w-full z-50 bg-white p-4 shadow-lg md:static md:w-1/4 
+                                md:p-0 md:shadow-none flex gap-4 justify-center 
+                                md:justify-start items-center">
+
+                   <Button 
+                    variant= "outline"
+                    className="w-1/2 md:w-full rounded-xl"
+                    disabled={book!.availableCopies === 0 || isPending}
+                    >
+
+                        {isPending ? 'Loading...' : (
+                            book!.availableCopies === 0 ? 'Out of Stock' : 'Add to Cart'
+                        )}
+
+                    </Button>
+
+                    <Button 
+                        variant= "default"
+                        className="bg-[#1C65DA] w-1/2 md:w-full rounded-xl"
+                        disabled={book!.availableCopies === 0 || isPending}
+                        onClick={() => borrowBook(7)}>
+
+                            {isPending ? 'Loading...' : (
+                                book!.availableCopies === 0 ? 'Out of Stock' : 'Borrow Book'
+                            )}
+
+                    </Button>
+
+                </div>                            
             </div>
-        </div>
-       
+        </div>     
+
     </div>
   )
 }

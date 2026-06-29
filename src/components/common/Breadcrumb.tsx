@@ -24,7 +24,7 @@ function Breadcrumb( {items}: BreadcrumbProps) {
       <BreadcrumbList>
         {
             items.map((item, index) => (
-                <div key={index} className="flex items-center gap-1">
+                <div key={index} className="flex items-center gap-1 text-[#1C65DA] font-medium">
                     <BreadcrumbItem>
                         
                         {item.href ? (

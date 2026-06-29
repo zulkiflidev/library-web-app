@@ -53,7 +53,72 @@ function UserListAdminPage(){
                 <Search className="absolute left-3 top-2 h-4 w-4 text-gray-400" />
             </div>
 
-            <div className="border rounded-lg overflow-hidden">
+            <div className="flex flex-col gap-2 flex md:hidden">
+
+                {                    
+                    isLoading ? (                        
+                        <div   className="p-3 text-center text-muted-foreground">Loading...</div>                        
+                    ) : isError ? (                  
+
+                        <div  className="p-3 text-center text-destructive">
+                            Failed to load users.
+                        </div>
+                    
+                    ) : (
+                                                        
+                        data?.users.map( (user, index) => (
+                            
+                            <div key={user.id} className="text-xs py-4 px-4 shadow-xs flex-col items-center w-full">
+                                
+                                <div className="flex flex-row justify-between w-full gap-2">
+                                    <p>No</p>
+                                    <p className="font-bold">{index + 1}</p>
+                                </div>
+
+                                <div className="flex flex-row justify-between w-full gap-2">
+                                    <p>Name</p>
+                                    <p className="font-bold">{ user.name}</p>
+                                </div>
+
+                                <div className="flex flex-row justify-between w-full gap-2">
+                                    <p>Email</p>
+                                    <p className="font-bold">{ user.email}</p>
+                                </div>
+
+                                <div className="flex flex-row justify-between w-full gap-2">
+                                    <p>Phone Number</p>
+                                    <p className="font-bold">{ user.phone}</p>
+                                </div>
+
+                                <div className="flex flex-row justify-between w-full gap-2">
+                                    <p>Phone Number</p>
+                                    <p className="font-bold">
+
+                                        {
+                                            new Date(user.createdAt).toLocaleDateString('id-ID',{
+                                                day: 'numeric',
+                                                month: 'long',
+                                                year: 'numeric',
+                                                hour: '2-digit',
+                                                minute: '2-digit'
+                                            })
+                                            .replace(/\s*pukul\s*/i, ', ')
+                                        }  
+
+
+                                    </p>
+                                </div>
+                                                                
+
+                            </div>
+                        ) )                                                                        
+                    )
+                }
+
+            </div>    
+
+
+            <div className="hidden md:flex border rounded-lg overflow-hidden">
                 <table className="w-full text-sm">
                     <thead className="bg-muted">
 
@@ -70,6 +135,7 @@ function UserListAdminPage(){
                     <tbody>
 
                         {
+
                             isLoading ? (
                                 <tr>
                                     <td colSpan={5} className="p-3 text-center text-muted-foreground">Loading...</td>
@@ -112,9 +178,7 @@ function UserListAdminPage(){
                             )
                         }
                     </tbody>
-
                 </table>
-
             </div>
 
 
