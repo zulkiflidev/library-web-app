@@ -72,6 +72,7 @@ function BorrowedListAdminPage() {
                             setStatus(s);
                             setQ('');
                         } }
+                        className="rounded-xl"
                         >
                             {s.charAt(0).toUpperCase() + s.slice(1)}
                         </Button>                    
@@ -102,12 +103,13 @@ function BorrowedListAdminPage() {
                                 <div className="flex flex-col gap-2 w-full">                               
                                     <div className="flex flex-row justify-between w-full">
                                         <div>
-                                            <p className="font-bold">
+                                            <p className="text-xs md:text-base font-bold">
                                                 Status: <Badge variant="secondary">{loan.displayStatus}</Badge>
                                             </p>
                                         </div>
-                                        <div className="flex flex-row gap-5 items-center">
-                                            <p className="font-bold">Due Date:</p>
+
+                                        <div className="flex flex-row gap-1 items-center">
+                                            <p className="font-bold text-xs md:text-base">Due Date:</p>
 
                                             <Badge variant="secondary">
                                                 
@@ -117,8 +119,8 @@ function BorrowedListAdminPage() {
                                                         day: 'numeric',
                                                         month: 'long',
                                                         year: 'numeric',
-                                                        hour: '2-digit',
-                                                        minute: '2-digit'
+                                                        // hour: '2-digit',
+                                                        // minute: '2-digit'
                                                     })
                                                     .replace(/\s*pukul\s*/i, ', ')
                                                 }                                                
@@ -130,42 +132,57 @@ function BorrowedListAdminPage() {
                                     <hr className="w-full border-t border-gray-300 my-1" />
 
                                     <div className="flex flex-row justify-between w-full">
-                                        <div className="flex flex-row justify-center gap-2">
+                                        <div className="flex flex-col md:flex-row justify-center gap-2">
                                             <div>
                                                  
                                                 {/* <p>{loan.book.coverImage}</p>  */}                                               
-                                                <img src={loan.book.coverImage ? loan.book.coverImage : NoBookCoverImage} alt={loan.book.title} 
-                                                    className="w-25 h-31 object-cover rounded" />
+                                                <img src={loan.book.coverImage ? loan.book.coverImage : NoBookCoverImage}
+                                                     alt={loan.book.title} 
+                                                     className="w-25 h-31 md:w-30 md:h-35 object-cover rounded" />
                                             </div>
-                                            <div>
+                                            <div className="flex flex-col w-full">
                                                 {/* info detail buku */}
-                                                <div className="flex-1 space-y-3">
+                                                <div className="flex flex-col gap-2 md:flex-1 md:space-y-3 w-full">
                                                 
                                                     <Badge variant="outline"> {loan.book.category?.name }</Badge> 
 
                                                     <h3 className="text-md font-bold">{loan.book.title}</h3>                                                                                           
                                                     <p className="text-xs text-muted-foreground">{loan.book.author.name}</p> 
 
-                                                    <div className="flex flex-row gap-2">
-                                                        <p className="text-xs font-bold">
-                                                            {
-                                                                new Date(loan.borrowedAt).toLocaleDateString('id-ID',{
-                                                                    day: 'numeric',
-                                                                    month: 'long',
-                                                                    year: 'numeric',
-                                                                    hour: '2-digit',
-                                                                    minute: '2-digit'
-                                                                }).replace(/\s*pukul\s*/i, ', ')
-                                                            }
-                                                        </p>
-
+                                                    <div className="flex flex-row gap-2 w-full">
+                                                        <div> 
+                                                            <p className="text-xs font-bold whitespace-nowrap">
+                                                                {
+                                                                    new Date(loan.borrowedAt).toLocaleDateString('id-ID',{
+                                                                        day: 'numeric',
+                                                                        month: 'long',
+                                                                        year: 'numeric',
+                                                                        // hour: '2-digit',
+                                                                        // minute: '2-digit'
+                                                                    }).replace(/\s*pukul\s*/i, ', ')
+                                                                }
+                                                            </p>
                                                         
-                                                        <p className="text-xs font-bold">
-                                                            -   Durations {
-                                                                loan.durationDays
-                                                            }
-                                                        </p>
+                                                        </div>
+
+
+                                                        <div> 
+                                                            <p className="text-xs font-bold whitespace-nowrap">
+                                                                -   Durations {
+                                                                    loan.durationDays
+                                                                } Days
+                                                            </p>
+                                                        </div>
+
                                                     </div>
+
+                                                    <hr className="w-full border-t border-gray-300 my-1" />
+
+                                                    <div className="flex  flex-col items-start justify-start md:hidden">                                            
+                                                        <p className="text-xs font-medium"> Borower's Name</p>                                        
+                                                        <p className="text-sm font-bold items-start">{ loan.borrower.name }</p>                                                                                    
+                                                    </div>
+
                                                     {/* <p className="text-xs text-muted-foreground">
                                                         Due Date: { new Date(loan.dueAt).toLocaleDateString('id-ID') 
                                                         }
@@ -176,11 +193,10 @@ function BorrowedListAdminPage() {
 
                                         </div>
 
-                                        <div className="flex flex-col items-center justify-center">
+                                        <div className="hidden md:flex flex-col items-center justify-center">
                                             
                                             <p className="text-xs font-medium"> Borower's Name</p>                                        
-                                            <p className="text-sm font-bold">{ loan.borrower.name }</p>                                        
-                                            
+                                            <p className="text-sm font-bold items-start">{ loan.borrower.name }</p>                                                                                    
                                         </div>
                                     </div>
                                 </div>

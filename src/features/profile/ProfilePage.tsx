@@ -38,7 +38,7 @@ function ProfilePage() {
 
         <h1 className="text-2xl font-bold">My Profile</h1>
 
-        <div className="flex flex-col items-start gap-6 border rounded-lg p-4 space-y-3 w-1/3">
+        <div className="flex flex-col items-start gap-6 border rounded-lg p-4 space-y-3 w-full md:w-1/3">
             
             <Avatar className="w-20 h-20">
                 <AvatarImage src={ profile.profilePhoto  ?? undefined } />

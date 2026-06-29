@@ -60,18 +60,19 @@ function HomePage() {
 
 
   return (
-    <div className="space-y-6 px-4 md:px-16">
+    <div className="space-y-6 px-4 md:px-16 bg-[#fdfdfd]">
 
-      <div className="w-full rounded-xl overflow-hidden">
+      <div className="w-full rounded-sm overflow-hidden shadow-sm">
         <img
           src={featuredImage}
           alt="Featured"
-          className="w-full h-64 md:h-80 object-cover"
+          className="w-full aspect-video h-25 md:h-64 md:h-80 
+                     object-cover object-center"
         />
       </div>
 
       {/* Menu Kategori */}
-      <div className="flex flex-wrap gap-1 justify-center items-center">
+      {/* <div className="grid grid-cols-3 md:grid-cols-6 gap-1 justify-start items-center ">
       {
         categoriesData?.categories
           .filter(
@@ -88,29 +89,70 @@ function HomePage() {
                   variant={categoryId === categories.id ? 'default' : 'ghost'} 
                   onClick={() => navigate(`/category?categoryId=${categories.id}`)}
                    
-                  className="flex flex-col items-center justify-center gap-2 h-auto p-4 min-w-[110px]"
+                  className="flex flex-col items-center justify-start gap-2 
+                             h-auto p-4 min-w-[110px] shadow-xs mx-1
+                             bg-white rounded-xl 
+                             "
                 >
-                  { 
-                    iconSrc && (
-                      <img src={iconSrc} 
-                        alt={`${categories.name} icon`}                          
-                        className="w-36 h-24 object-contain" 
-                      />
-                    )              
-                  }
-                  
-                  <span className="text-xs font-medium text-center"> {categories.name} </span>
+                  <div className="flex flex-col gap-1 items-start">
+                      { 
+                        iconSrc && (
+                          <img src={iconSrc} 
+                            alt={`${categories.name} icon`}                          
+                            className="w-36 h-24 object-contain" 
+                          />
+                        )              
+                      }                  
+                      <span className="text-xs font-medium text-left"> {categories.name} </span>
+                  </div>
                 </Button>
               )
             }            
           )
       }
+      </div> */}
+
+       
+      <div className="grid grid-cols-3 md:grid-cols-6 gap-3 md:gap-1 justify-start items-center">
+        {categoriesData?.categories
+          .filter((category) =>
+            Object.prototype.hasOwnProperty.call(ALLOWED_CATEGORIES_WITH_ICONS, category.name)
+          )
+          .map((categories) => {
+            const iconSrc = ALLOWED_CATEGORIES_WITH_ICONS[categories.name];
+
+            return (
+              <Button
+                key={categories.id}
+                variant={categoryId === categories.id ? 'default' : 'ghost'}
+                onClick={() => navigate(`/category?categoryId=${categories.id}`)}
+                 
+                className="flex flex-col items-center justify-start gap-1 md:gap-2 
+                          h-auto p-2 pt-1 md:p-4 min-w-[110px] shadow-xs mx-0 md:mx-1
+                          bg-white rounded-xl"
+              >
+                <div className="flex flex-col gap-0.5 md:gap-1 items-center">
+                  {iconSrc && (
+                    <img
+                      src={iconSrc}
+                      alt={`${categories.name} icon`}
+                      className="w-36 h-16 md:h-24 object-contain"
+                    />
+                  )}
+                  <span className="text-xs font-medium text-center md:text-left">
+                    {categories.name}
+                  </span>
+                </div>
+              </Button>
+            );
+          })}
       </div>
+
 
       {/* Rekomendasi Buku */}
       <div className="space-y-4">
 
-        <h2 className="text-xl font-bold"> Recomended Books </h2>
+        <h2 className="text-xl font-bold"> Recomendation</h2>
         {isLoading && <div>Loading...</div>}
         {isError && <div>Error: Failed to load books</div> }
         <div className="grid grid-cols-2  md:grid-cols-3  lg:grid-cols-5 gap-4">
@@ -128,7 +170,7 @@ function HomePage() {
       <div className="space-y-4">
 
         <h2 className="text-xl font-bold">Popular Authors</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 cursor-pointer">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 cursor-pointer">
             {
                 popularAuthors?.map(
 
@@ -152,7 +194,13 @@ function HomePage() {
                             />
 
                             <h3 className="font-semibold text-sm">{author.name}</h3>
-                            <p className="text-xs text-muted-foreground line-clamp-2">{author.bio ?? 'No bio available'}</p>
+                            
+                            {/* <p className="text-xs text-muted-foreground line-clamp-2">
+                            
+                                {author.bio ?? 'No bio available'}
+                                
+                            </p> */}
+                            
                             <div className="flex flex-row">
                                 <img src={bookIcon} alt="Book Icon" className="w-4 h-4 mr-1" />
                                 <p className="text-xs text-muted-foreground">{author.bookCount} books</p>

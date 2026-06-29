@@ -21,6 +21,8 @@ const useRegister = () => {
             },
             onSuccess: () => {
                 navigate('/login');
+                // navigate('/');
+
             }
         
         }

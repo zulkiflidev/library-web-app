@@ -5,7 +5,7 @@ import socialMediaIcons from '@/assets/social-media-icons.svg'
 
 function Footer() {
   return (
-    <div className="flex flex-col items-center jusify-center 
+    <div className="flex flex-col items-center jusify-center px-4 md:px-20 
                     mt-10 space-y-3 gap-5 pb-20 border-t pt-20">
 
         <div className="flex items-center gap-2 cursor-pointer">
@@ -14,7 +14,7 @@ function Footer() {
 
         </div>
 
-        <div>
+        <div className="items-center justify-center text-center">
             <p>Discover inspiring stories & timeless knowledge, ready to borrow anytime. Explore online or visit our nearest library branch.</p>
         </div>
 

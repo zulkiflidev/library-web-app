@@ -18,6 +18,9 @@ import type { Book } from "@/types";
 import Breadcrumb from "@/components/common/Breadcrumb";
 
 // import NoBookCoverImage from '@/assets/noBookCoverImage.webp';
+import { Filter } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+
 
 
 function CategoryPage() {
@@ -31,6 +34,7 @@ function CategoryPage() {
 
     const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
+    const [isOpen, setOpen] = useState(false); //untuk filter
     
 
     useEffect(
@@ -59,7 +63,7 @@ function CategoryPage() {
     }
 
     return (
-    <div className="flex gap-8 px-4 md:px-20">
+    <div className="flex flex-col gap-8 px-4 md:px-20">
 
         <Breadcrumb items={
             [
@@ -69,52 +73,103 @@ function CategoryPage() {
         } 
         />        
 
-        <div className="w-48 shrink-0 space-y-3">
+        <h2 className="text-2xl font-bold">Book List</h2>
 
-            <h2 className="text-2xl font-semibold">Categories</h2>
-            {
-                categoriesData?.categories.map(
-                    (category) => (
-
-                        <div key={category.id} className="flex items-center gap-2">
-                            <Checkbox 
-                                checked={selectedIds.includes(category.id)}
-                                // onChange={(checked) => handleCheck(category.id, checked)}
-                                onCheckedChange={ (checked) => handleCheck(category.id, !!checked)}
-                            />
-                            <label htmlFor={String(category.id)} className="text-sm cursor-pointer">
-                                
-                                {category.name}
-                            
-                            </label>
-
-                        </div>                            
-                    )
-                        
-                )
-            }
+    
+        <div className="flex md:hidden justify-between bg-white rounded-xl shadow-xs p-4 items-center gap-4">
+            
+            <p className="font-bold">FILTER</p> 
+            
+            <Button variant="ghost" onClick={() => setOpen(!isOpen)}>   
+                <Filter className="w-5 h-5" />
+            </Button>
 
         </div>
 
-        <div className="flex-1 space-y-4">
+        {isOpen && categoriesData?.categories && (
+            
+            <div className="flex md:hidden flex-col gap-3">  
+                
+                {categoriesData.categories.map((category) => {
 
-            <h1 className="text-2xl font-bold">Category Page</h1>
-            {
-                isLoading && <div>Loading...</div>
-            }
-            {
-                isError && <div>Error: Failed to load books</div>
-            }
+                    const idString = String(category.id);
+                    
+                    return (
+                        <div key={category.id} className="flex items-center gap-3 py-1.5 
+                                                          active:bg-gray-50 rounded">
 
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                            <Checkbox 
+                                id={idString}  
+                                checked={selectedIds.includes(category.id)}
+                                onCheckedChange={(checked) => handleCheck(category.id, !!checked)}
+                            />
 
+                            <label 
+                                htmlFor={idString} 
+                                className="text-sm font-medium select-none min-h-[24px] 
+                                           flex items-center flex-1 cursor-pointer"
+                            >
+                                {
+                                  category.name
+                                }
+                            </label>
+                        </div>
+                    );
+
+                })}
+
+            </div>
+        )}
+
+        <div className = "flex gap-4">
+        
+            <div className="hidden md:flex flex-col w-48 space-y-3">
+                {/* <h2 className="text-2xl font-semibold">Categories</h2> */}
                 {
-                    books?.map(
-                        (book : Book) => (
-                            <BookCard key={book.id} book={book} />
+                    categoriesData?.categories.map(
+                        (category) => (
+
+                            <div key={category.id} className="flex items-center gap-2">
+                                <Checkbox 
+                                    checked={selectedIds.includes(category.id)}
+                                    // onChange={(checked) => handleCheck(category.id, checked)}
+                                    onCheckedChange={ (checked) => handleCheck(category.id, !!checked)}
+                                />
+                                <label htmlFor={String(category.id)} className="text-sm cursor-pointer">
+                                    
+                                    {category.name}
+                                
+                                </label>
+
+                            </div>                            
                         )
+                            
                     )
                 }
+
+            </div>
+
+            <div className="flex-1 space-y-4">
+
+                {/* <h1 className="text-2xl font-bold"></h1> */}
+                {
+                    isLoading && <div>Loading...</div>
+                }
+                {
+                    isError && <div>Error: Failed to load books</div>
+                }
+
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+
+                    {
+                        books?.map(
+                            (book : Book) => (
+                                <BookCard key={book.id} book={book} />
+                            )
+                        )
+                    }
+
+                </div>
 
             </div>
 
