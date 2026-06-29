@@ -48,6 +48,8 @@ function Navbar() {
     }
   };
 
+  const [isSearchMobile, setIsSearchMobile] = useState(false);
+
   return (
     <nav className="relative border-b px-6 py-3 flex items-center justify-between px-4 
                     md:px-20">
@@ -65,7 +67,7 @@ function Navbar() {
 
       { token && user?.role === 'USER' && (
        
-          <div className="relative w-full max-w-md">
+          <div className="hidden md:flex relative w-full max-w-md">
               <Input placeholder="Search any book" value={search} 
                      onChange={ (e) => dispatch( setSearch(e.target.value) )}
                      onKeyDown={handleSearchKeyDown}
@@ -76,10 +78,31 @@ function Navbar() {
 
       )}
 
+      {
+        isSearchMobile && (
+          <div className="flex md:hidden relative w-full max-w-md text-xs">
+              <Input placeholder="Search any book" value={search} 
+                    onChange={ (e) => dispatch( setSearch(e.target.value) )}
+                    onKeyDown={handleSearchKeyDown}
+              className="pr-3 w-full text-xs"
+              />          
+          </div>
+        )
+      }
+
 
       { token  ? (                
         <>
           <div className="hidden md:flex">
+
+            <div className="hidden md:flex justify-end items-center">
+              <Button variant="ghost"
+                      onClick={() => navigate('/cart')}
+              >
+                  <img src={bagIcon} alt="bag icon" className="w-6 h-6" />
+              </Button>
+            </div>
+
             <DropdownMenu>            
                 <DropdownMenuTrigger asChild>
                     <Button variant="ghost" 
@@ -87,9 +110,9 @@ function Navbar() {
                     >
                         {/* 👤 {user?.name} */}
 
-                          <div className="relative">
+                          {/* <div className="relative">
                             <img src={bagIcon} alt="bag icon" className="w-6 h-6" />
-                          </div>
+                          </div> */}
 
                           <Avatar className="w-9 h-9">
                               <AvatarImage src={user?.profilePhoto ?? undefined} />
@@ -157,22 +180,41 @@ function Navbar() {
             </DropdownMenu>
           </div>     
 
-          <Button variant="ghost" className="flex md:hidden"
-                  onClick={ () => setIsOpen(!isOpen) }
-          >                                    
-              <div className="relative">
-                <img src={bagIcon} alt="bag icon" className="w-6 h-6" />
-              </div>
+        
+          <div className="flex flex-row md:hidden items-center">
 
-              <Avatar className="w-9 h-9">
-                  <AvatarImage src={user?.profilePhoto ?? undefined} />
-                  <AvatarFallback>
-                      <img src={defaultPhoto} 
-                          alt="default photo" 
-                          className="w-full h-full rounded-full object-cover" />
-                  </AvatarFallback>
-              </Avatar>
-          </Button>
+            <Button variant="ghost"
+              onClick={ () => setIsSearchMobile(!isSearchMobile) }
+            >                                          
+              <Search className="left-3 top-2 h-6 w-6 text-gray-400" />
+            </Button>
+
+            <Button className="flex md:hidden" variant="ghost"
+                    onClick={() => navigate('/cart')}
+            >              
+                <div className="relative">                
+                  <img src={bagIcon} alt="bag icon" className="w-6 h-6" />
+                </div>
+
+            </Button>
+
+            <Button variant="ghost" className="flex md:hidden"
+                    onClick={ () => setIsOpen(!isOpen) }
+            >                                    
+                {/* <div className="relative">                
+                  <img src={bagIcon} alt="bag icon" className="w-6 h-6" />
+                </div> */}
+
+                <Avatar className="w-9 h-9">
+                    <AvatarImage src={user?.profilePhoto ?? undefined} />
+                    <AvatarFallback>
+                        <img src={defaultPhoto} 
+                            alt="default photo" 
+                            className="w-full h-full rounded-full object-cover" />
+                    </AvatarFallback>
+                </Avatar>
+            </Button>
+          </div>
 
 {/* //====menu for mobile for logged user         */}
           {isOpen && token && (

@@ -23,6 +23,7 @@ import AuthLayout from "@/components/common/authLayout";
 
 import ReviewsListPage from "@/features/reviews/ReviewsListPage";
 import SearchPage from '@/features/books/SearchPage';
+import CartPage from '@/features/cart/CartPage';
 
 
 export const router = createBrowserRouter(
@@ -55,6 +56,12 @@ export const router = createBrowserRouter(
                 {
                     path: '/search',
                     element: <SearchPage />
+                
+                },
+
+                {
+                    path: '/cart',
+                    element: <CartPage />
                 
                 },
 

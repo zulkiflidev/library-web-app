@@ -20,16 +20,19 @@ import useBooks from '@/hooks/useBooks';
 import Breadcrumb from '@/components/common/Breadcrumb'
 import NoBookCoverImage from '@/assets/noBookCoverImage.webp';
 
+import { useAddToCart } from '@/hooks/useCart';
+// import type { Book } from '@/types/book';
 
 function BookDetailPage() {
   
   const { id } = useParams<{ id: string }>();
   const { data: book, isLoading, isError } = useBookDetail(id!);
-  const { mutate: borrowBook, isPending } = useBorrowBook(book?.id ?? 0);
+  const { mutate: borrowBook, isPending } = useBorrowBook( book?.id ?? 0, 7 ); //default 7 hari
+  const { mutate: atcBook, isPending: isAtcPending } = useAddToCart( book?.id ?? 0 ); //default 7 hari
 
   const { data: books, 
-    // isLoading: isBooksLoading, 
-    // isError: isBooksError 
+    isLoading: isBooksLoading, 
+    isError: isBooksError 
   } = useBooks( book?.categoryId ?? 0, 5);
 
 
@@ -37,6 +40,12 @@ function BookDetailPage() {
   if (isError) return <div>Error: Failed to load book details</div>
   if (!book) return <div>Book not found</div>
 
+  if (isBooksLoading) return <div>Loading...</div>
+  if (isBooksError) return <div>Error: Failed to load book details</div>
+  if (!book) return <div>Book not found</div>
+
+  if (isAtcPending) return <div>Loading...</div>
+  
   return (
     <div className="space-y-8 px-4 md:px-20 mt-2">
         <Breadcrumb items={[
@@ -109,6 +118,7 @@ function BookDetailPage() {
                     variant= "outline"
                     className="w-1/2 md:w-full rounded-xl"
                     disabled={book!.availableCopies === 0 || isPending}
+                    onClick={() => atcBook(  )}
                     >
 
                         {isPending ? 'Loading...' : (
@@ -121,7 +131,7 @@ function BookDetailPage() {
                         variant= "default"
                         className="bg-[#1C65DA] w-1/2 md:w-full rounded-xl"
                         disabled={book!.availableCopies === 0 || isPending}
-                        onClick={() => borrowBook(7)}>
+                        onClick={() => borrowBook( )}>
 
                             {isPending ? 'Loading...' : (
                                 book!.availableCopies === 0 ? 'Out of Stock' : 'Borrow Book'
@@ -227,6 +237,7 @@ function BookDetailPage() {
                 <div className="grid grid-cols-2  md:grid-cols-3  lg:grid-cols-5 gap-4">
 
                 { books?.map(
+                    
                     (book: Book) => (
                     <BookCard key={book.id} book={book} />
                     )
