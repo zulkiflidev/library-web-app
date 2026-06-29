@@ -1,6 +1,4 @@
 //import React from 'react'
-
-
 import { useSearchParams } from "react-router-dom";
 import { useState, useEffect } from 'react';
 
@@ -21,6 +19,7 @@ import Breadcrumb from "@/components/common/Breadcrumb";
 import { Filter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
+import { Star } from 'lucide-react'
 
 
 function CategoryPage() {
@@ -73,9 +72,7 @@ function CategoryPage() {
         } 
         />        
 
-        <h2 className="text-2xl font-bold">Book List</h2>
-
-    
+        <h2 className="text-2xl font-bold">Book List</h2>    
         <div className="flex md:hidden justify-between bg-white rounded-xl shadow-xs p-4 items-center gap-4">
             
             <p className="font-bold">FILTER</p> 
@@ -123,30 +120,87 @@ function CategoryPage() {
 
         <div className = "flex gap-4">
         
-            <div className="hidden md:flex flex-col w-48 space-y-3">
-                {/* <h2 className="text-2xl font-semibold">Categories</h2> */}
-                {
-                    categoriesData?.categories.map(
-                        (category) => (
-
-                            <div key={category.id} className="flex items-center gap-2">
-                                <Checkbox 
-                                    checked={selectedIds.includes(category.id)}
-                                    // onChange={(checked) => handleCheck(category.id, checked)}
-                                    onCheckedChange={ (checked) => handleCheck(category.id, !!checked)}
-                                />
-                                <label htmlFor={String(category.id)} className="text-sm cursor-pointer">
+            <div className="flex flex-col gap-4">
+                <div className="hidden md:flex flex-col w-48 space-y-3">
+                    {/* <h2 className="text-2xl font-semibold">Categories</h2> */}
+                    {
+                        categoriesData?.categories.map(
+                            (category) => (
+                                <div key={category.id} className="flex items-center gap-2">
+                                    <Checkbox 
+                                        checked={selectedIds.includes(category.id)}
+                                        // onChange={(checked) => handleCheck(category.id, checked)}
+                                        onCheckedChange={ (checked) => handleCheck(category.id, !!checked)}
+                                    />
+                                    <label htmlFor={String(category.id)} className="text-sm cursor-pointer">
+                                        
+                                        {category.name}
                                     
-                                    {category.name}
+                                    </label>
+
+                                </div>                            
+                            )
                                 
-                                </label>
-
-                            </div>                            
                         )
-                            
-                    )
-                }
+                    }
+                </div>
 
+                <div className="hidden md:flex flex-col">
+
+                    <hr />
+
+                    <div className="flex items-center gap-1 pt-5">
+                        <Checkbox 
+                            // checked={ selectedIds.includes(category.id) }
+                            // onChange={(checked) => handleCheck(category.id, checked)}
+                            // onCheckedChange={  (checked) => handleCheck(category.id, !!checked) }
+                        />
+
+                        <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                        <span className="text-xs font-medium"> 5 </span>
+                    </div>
+
+                    <div className="flex items-center gap-1 pt-5">
+                        <Checkbox 
+                            // checked={ selectedIds.includes(category.id) }
+                            // onChange={(checked) => handleCheck(category.id, checked)}
+                            // onCheckedChange={  (checked) => handleCheck(category.id, !!checked) }
+                        />                        
+                        <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                        <span className="text-xs font-medium"> 4 </span>
+                    </div>
+
+                    <div className="flex items-center gap-1 pt-5">
+                        <Checkbox 
+                            // checked={ selectedIds.includes(category.id) }
+                            // onChange={(checked) => handleCheck(category.id, checked)}
+                            // onCheckedChange={  (checked) => handleCheck(category.id, !!checked) }
+                        />                        
+                        <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                        <span className="text-xs font-medium"> 3 </span>
+                    </div>
+
+                    <div className="flex items-center gap-1 pt-5">
+                        <Checkbox 
+                            // checked={ selectedIds.includes(category.id) }
+                            // onChange={(checked) => handleCheck(category.id, checked)}
+                            // onCheckedChange={  (checked) => handleCheck(category.id, !!checked) }
+                        />                        
+                        <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                        <span className="text-xs font-medium"> 2 </span>
+                    </div>
+
+                    <div className="flex items-center gap-1 pt-5">
+                        <Checkbox 
+                            // checked={ selectedIds.includes(category.id) }
+                            // onChange={(checked) => handleCheck(category.id, checked)}
+                            // onCheckedChange={  (checked) => handleCheck(category.id, !!checked) }
+                        />                        
+                        <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                        <span className="text-xs font-medium"> 1 </span>
+                    </div>
+
+                </div>
             </div>
 
             <div className="flex-1 space-y-4">

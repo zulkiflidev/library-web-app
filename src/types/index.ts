@@ -224,3 +224,21 @@ export interface AuthorBooksResponse {
     books: Book[];
     pagination: LoanPagination;
 }
+
+
+//===ini untuk Cart
+
+export interface CartItem {
+  id: number;
+  bookId: number;
+  addedAt: string;
+  book: Book;
+  
+}
+
+export interface CartResponse {
+  cartId: number;
+  items: CartItem[];
+  itemCount: number;
+
+}

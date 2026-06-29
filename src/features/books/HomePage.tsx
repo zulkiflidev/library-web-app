@@ -152,7 +152,7 @@ function HomePage() {
       {/* Rekomendasi Buku */}
       <div className="space-y-4">
 
-        <h2 className="text-xl font-bold"> Recomendation</h2>
+        <h2 className="text-xl font-bold"> Recommendation </h2>
         {isLoading && <div>Loading...</div>}
         {isError && <div>Error: Failed to load books</div> }
         <div className="grid grid-cols-2  md:grid-cols-3  lg:grid-cols-5 gap-4">

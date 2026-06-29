@@ -27,7 +27,7 @@ function PreviewAdminPage() {
   
   const { id } = useParams<{ id: string }>();
   const { data: book, isLoading, isError } = useBookDetail(id!);
-  const { mutate: borrowBook, isPending } = useBorrowBook(book?.id ?? 0);
+  const { mutate: borrowBook, isPending } = useBorrowBook(book?.id ?? 0, 7);
 
   const navigate = useNavigate();
 
@@ -135,7 +135,7 @@ function PreviewAdminPage() {
                         variant= "default"
                         className="bg-[#1C65DA] w-1/2 md:w-full rounded-xl"
                         disabled={book!.availableCopies === 0 || isPending}
-                        onClick={() => borrowBook(7)}>
+                        onClick={() => borrowBook()}>
 
                             {isPending ? 'Loading...' : (
                                 book!.availableCopies === 0 ? 'Out of Stock' : 'Borrow Book'

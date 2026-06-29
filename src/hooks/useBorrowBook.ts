@@ -6,13 +6,13 @@ import toast from 'react-hot-toast';
 import { AxiosError } from 'axios';
 
 
-const useBorrowBook = (bookId: number) => {
+const useBorrowBook = (bookId: number, days: number) => {
 
     const queryClient = useQueryClient();
 
     return useMutation(
         {
-            mutationFn: async (days: number) => {
+            mutationFn: async () => {
                 const response = await api.post('/loans', { bookId, days})
                 return response.data;
             },
