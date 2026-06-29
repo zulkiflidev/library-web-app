@@ -22,7 +22,7 @@ import BookByAuthorPage from "@/features/books/BookByAuthorPage";
 import AuthLayout from "@/components/common/authLayout";
 
 import ReviewsListPage from "@/features/reviews/ReviewsListPage";
-
+import SearchPage from '@/features/books/SearchPage';
 
 
 export const router = createBrowserRouter(
@@ -50,6 +50,12 @@ export const router = createBrowserRouter(
                 {
                     path: '/author/:id',
                     element: <BookByAuthorPage />
+                },
+
+                {
+                    path: '/search',
+                    element: <SearchPage />
+                
                 },
 
                 {

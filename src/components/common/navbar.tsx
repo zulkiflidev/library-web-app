@@ -40,8 +40,13 @@ function Navbar() {
   const user = useSelector((state: RootState) => state.auth.user);
   
   const search = useSelector( (state: RootState) => state.ui.search   );
-
   const [isOpen, setIsOpen] = useState(false); //open menu mobile atau tidak?
+
+  const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && search.trim() ) {
+      navigate('/search');
+    }
+  };
 
   return (
     <nav className="relative border-b px-6 py-3 flex items-center justify-between px-4 
@@ -63,6 +68,7 @@ function Navbar() {
           <div className="relative w-full max-w-md">
               <Input placeholder="Search any book" value={search} 
                      onChange={ (e) => dispatch( setSearch(e.target.value) )}
+                     onKeyDown={handleSearchKeyDown}
               className="pl-8 pr-3 w-full"
               />
               <Search className="absolute left-3 top-2 h-4 w-4 text-gray-400" />
