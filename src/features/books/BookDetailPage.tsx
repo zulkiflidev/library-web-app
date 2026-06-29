@@ -46,9 +46,11 @@ function BookDetailPage() {
         ]} />
 
         <div className="flex flex-col  md:flex-row gap-8">        
-            <img src={book!.coverImage ? book!.coverImage : NoBookCoverImage} alt={book!.title} 
-                 className="self-center justify-center items-center w-48 h-64 
-                            object-cover rounded-lg shadow"    />
+            <img src={book!.coverImage ? book!.coverImage : NoBookCoverImage} 
+                 alt={book!.title} 
+                 className="self-center md:self-start justify-center items-center w-48 h-64 
+                            object-cover rounded-lg shadow"    
+            />
         
             <div className="flex-1 space-y-3">
                 
@@ -82,7 +84,7 @@ function BookDetailPage() {
                     </div>
                     
                     <div className="flex flex-col gap-2 border-l px-5">
-                        <p className="font-bold text-sm">179</p>
+                        <p className="font-bold text-sm"> {book.reviewCount}</p>
                         <p>Reviews</p> 
                     </div>
 
