@@ -6,12 +6,11 @@ import type { Book } from '@/types';
 const useRecomendedBooks = () => {
 
     return useQuery(
-
         {
             queryKey: ['recommendedBooks'],
             queryFn: async () => { 
                 const response = await api.get('/books/recommend', {
-                    params: { by: 'rating', limit: 10, page: 1 },
+                    params: { by: 'rating', limit: 20, page: 1 },
                 });
 
                 console.log('recommend response:', response.data)

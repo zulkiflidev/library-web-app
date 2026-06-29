@@ -71,50 +71,10 @@ function HomePage() {
         />
       </div>
 
-      {/* Menu Kategori */}
-      {/* <div className="grid grid-cols-3 md:grid-cols-6 gap-1 justify-start items-center ">
-      {
-        categoriesData?.categories
-          .filter(
-            (category) => 
-              Object.prototype.hasOwnProperty.call(ALLOWED_CATEGORIES_WITH_ICONS, category.name)
-          )
-          .map(
-            (categories) => {
-              const iconSrc = ALLOWED_CATEGORIES_WITH_ICONS[categories.name];
-
-              return (
-                <Button key={categories.id} 
-                   
-                  variant={categoryId === categories.id ? 'default' : 'ghost'} 
-                  onClick={() => navigate(`/category?categoryId=${categories.id}`)}
-                   
-                  className="flex flex-col items-center justify-start gap-2 
-                             h-auto p-4 min-w-[110px] shadow-xs mx-1
-                             bg-white rounded-xl 
-                             "
-                >
-                  <div className="flex flex-col gap-1 items-start">
-                      { 
-                        iconSrc && (
-                          <img src={iconSrc} 
-                            alt={`${categories.name} icon`}                          
-                            className="w-36 h-24 object-contain" 
-                          />
-                        )              
-                      }                  
-                      <span className="text-xs font-medium text-left"> {categories.name} </span>
-                  </div>
-                </Button>
-              )
-            }            
-          )
-      }
-      </div> */}
-
-       
+           
       <div className="grid grid-cols-3 md:grid-cols-6 gap-3 md:gap-1 justify-start items-center">
-        {categoriesData?.categories
+        {
+          categoriesData?.categories
           .filter((category) =>
             Object.prototype.hasOwnProperty.call(ALLOWED_CATEGORIES_WITH_ICONS, category.name)
           )
@@ -125,20 +85,25 @@ function HomePage() {
               <Button
                 key={categories.id}
                 variant={categoryId === categories.id ? 'default' : 'ghost'}
-                onClick={() => navigate(`/category?categoryId=${categories.id}`)}
+                onClick={
+                  () => navigate(`/category?categoryId=${categories.id}`)
+                }
                  
                 className="flex flex-col items-center justify-start gap-1 md:gap-2 
                           h-auto p-2 pt-1 md:p-4 min-w-[110px] shadow-xs mx-0 md:mx-1
                           bg-white rounded-xl"
               >
                 <div className="flex flex-col gap-0.5 md:gap-1 items-center">
-                  {iconSrc && (
-                    <img
-                      src={iconSrc}
-                      alt={`${categories.name} icon`}
-                      className="w-36 h-16 md:h-24 object-contain"
-                    />
-                  )}
+                  {
+                    iconSrc && (
+                      <img
+                        src={iconSrc}
+                        alt={`${categories.name} icon`}
+                        className="w-36 h-16 md:h-24 object-contain"
+                      />
+                    )
+                  }
+
                   <span className="text-xs font-medium text-center md:text-left">
                     {categories.name}
                   </span>
@@ -152,7 +117,7 @@ function HomePage() {
       {/* Rekomendasi Buku */}
       <div className="space-y-4">
 
-        <h2 className="text-xl font-bold"> Recommendation </h2>
+        <h2 className="text-xl font-bold"> Recomendation</h2>
         {isLoading && <div>Loading...</div>}
         {isError && <div>Error: Failed to load books</div> }
         <div className="grid grid-cols-2  md:grid-cols-3  lg:grid-cols-5 gap-4">
