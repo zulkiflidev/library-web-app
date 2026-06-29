@@ -12,6 +12,7 @@ import {
 import { Star } from 'lucide-react'
 import { useNavigate } from 'react-router-dom';
 
+import NoBookCoverImage from '@/assets/noBookCoverImage.webp';
 
 
 interface BookCardProps {
@@ -26,7 +27,7 @@ function BookCard({ book }: BookCardProps) {
         onClick={() => navigate(`/books/${book.id}`)}
         >
             <div className="relative aspect-[2/3]">
-                <img src={book.coverImage} 
+                <img src={book.coverImage ? book.coverImage : NoBookCoverImage} 
                     alt={book.title} 
                     className="absolute inset-0 w-full h-full object-cover" />
             </div>

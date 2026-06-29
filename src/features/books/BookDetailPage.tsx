@@ -18,6 +18,8 @@ import BookCard from '@/features/books/BookCard';
 import useBooks from '@/hooks/useBooks';
 
 import Breadcrumb from '@/components/common/Breadcrumb'
+import NoBookCoverImage from '@/assets/noBookCoverImage.webp';
+
 
 function BookDetailPage() {
   
@@ -44,7 +46,7 @@ function BookDetailPage() {
         ]} />
 
         <div className="flex gap-8">        
-            <img src={book!.coverImage} alt={book!.title} 
+            <img src={book!.coverImage ? book!.coverImage : NoBookCoverImage} alt={book!.title} 
                  className="w-48 h-64 object-cover rounded-lg shadow"    />
         
             <div className="flex-1 space-y-3">

@@ -18,6 +18,9 @@ import { Button } from '@/components/ui/button';
 import { logout } from '@/features/auth/authSlice';
 
 import { ChevronDown } from 'lucide-react'
+import { Search } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+
 
 import {
   DropdownMenu, 
@@ -50,18 +53,15 @@ function Navbar() {
       
       </Button>
 
+      { token && user?.role === 'USER' && (
+       
+          <div className="relative w-full max-w-md">
+              <Input placeholder="Search book..." value={search} onChange={ (e) => dispatch( setSearch(e.target.value) )}
+              className="pl-8 pr-3 w-full"
+              />
+              <Search className="absolute left-3 top-2 h-4 w-4 text-gray-400" />
+          </div>
 
-
-      {/* Untuk pencarian Buku */}
-      { token && (
-
-        <input type="text" placeholder="Search"
-         className="border rounded-md px-3 py-1.5 text-sm w-100 bg-background" 
-         value={search}
-         onChange={ (e) => dispatch( setSearch(e.target.value)  )  }
-         
-         />
-      
       )}
 
 

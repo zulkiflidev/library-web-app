@@ -16,10 +16,11 @@ import useBorrowBook from '../../hooks/useBorrowBook';
 // import type { Book } from '@/types';
 // import BookCard from '@/features/books/BookCard';
 // import useBooks from '@/hooks/useBooks';
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft } from 'lucide-react';
 // import Breadcrumb from '@/components/common/Breadcrumb'
 
 import { useNavigate } from 'react-router-dom';
+import NoBookCoverImage from '@/assets/noBookCoverImage.webp';
 
 
 function PreviewAdminPage() {
@@ -55,7 +56,7 @@ function PreviewAdminPage() {
         </Button>
 
         <div className="flex gap-8">        
-            <img src={book!.coverImage} alt={book!.title} 
+            <img src={book!.coverImage ? book!.coverImage : NoBookCoverImage} alt={book!.title} 
                  className="w-48 h-64 object-cover rounded-lg shadow"    />
         
             <div className="flex-1 space-y-3">

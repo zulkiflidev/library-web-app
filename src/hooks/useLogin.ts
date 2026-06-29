@@ -25,12 +25,19 @@ const useLogin = () => {
                 return response.data;
             },
             onSuccess: (data) => {
-                console.log('user login -->', data)
+                //console.log('user login -->', data)
                 dispatch( setCredentials({
                     token: data.data.token,
                     user: data.data.user,
                 }));
-                navigate('/');
+                
+                if (data.data.user.role === 'ADMIN'){
+                    navigate('/admin/users');
+                }
+                else
+                    {
+                    navigate('/');
+                }
             }
         }
     )

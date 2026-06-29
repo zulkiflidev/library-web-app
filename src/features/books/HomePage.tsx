@@ -27,6 +27,9 @@ import iconScience from '@/assets/menu/science.png';
 import iconSelfImprovement from '@/assets/menu/self-improvement.png';
 import bookIcon from '@/assets/BookIcon.svg';
 
+// import NoBookCoverImage from '@/assets/noBookCoverImage.webp';
+
+
 function HomePage() {
 
   // const dispatch = useDispatch<AppDispatch>();
@@ -125,7 +128,7 @@ function HomePage() {
       <div className="space-y-4">
 
         <h2 className="text-xl font-bold">Popular Authors</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 cursor-pointer">
             {
                 popularAuthors?.map(
 

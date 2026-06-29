@@ -3,16 +3,18 @@ import api from '@/lib/axios';
 import type { AdminBooksResponse } from '@/types';
 
 
-const useAdminBooks = (q: string = '') => {
+const useAdminBooks = (q: string = '', status: string = 'all') => {
 
     return useQuery(
         {
-            queryKey: ['adminBooks', q],
+            queryKey: ['adminBooks', q, status],
             queryFn: async () =>{
                 const response = await api.get('/admin/books', {
                     params: { 
-                    
-                        // q, page: 1, limit: 20 
+                         status: status,
+                         q, 
+                         page: 1, 
+                         limit: 20 
                     
                     }
                 });

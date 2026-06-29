@@ -3,7 +3,7 @@
 import useProfile from '@/hooks/useProfile';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
-import Breadcrumb from '@/components/common/Breadcrumb';
+// import Breadcrumb from '@/components/common/Breadcrumb';
 import defaultPhoto from '@/assets/DefaultPhoto.png';
 import { Button } from '@/components/ui/button';
 
@@ -25,47 +25,16 @@ function ProfilePage() {
 
   return (
     <div className="space-y-8 px-4 md:px-20">
-        <Breadcrumb items={
+       
+        {/* <Breadcrumb items={
             [
                 { label: 'Home', href: '/' },
                 { label: 'My Profile' },
             ]
         } 
-        />        
-
-
-        {/* <div className="flex flex-row justify-start w-1/2 bg-[#F5F5F5] gap-10 rounded-full ">
-
-            <div className="p-3 w-1/3 text-center">
-                <Button onClick={
-                    () => navigate('/profile')
-                } className="bg-white text-black font-bold w-full" 
-                >
-                    Profile
-                </Button>
-            </div>
-
-            <div className="p-3 w-1/3 text-center">
-                <Button onClick={
-                    () => navigate('/loans')
-                } variant="ghost"
-                >
-                    Borrowed List
-                </Button>
-            </div>
-
-            <div className="p-3 w-1/3 text-center">
-                <Button onClick={
-                    () => navigate('/reviews')
-                } variant="ghost" 
-                >
-                    Reviews
-                </Button>
-            </div>
-        </div>    */}
-
+        />         */}
+    
         <ProfileTabs />
-
 
         <h1 className="text-2xl font-bold">My Profile</h1>
 
